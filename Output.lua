@@ -1,4 +1,4 @@
---ns namespace variable 
+
 local _, ns = ...;
 
 local t = {};		--table of FontStrings placed on the frame
