@@ -1,6 +1,6 @@
 ## Interface: 90100	
 ## Title: Key Keeper
-## Version: 1.0.0
+## Version: 1.0.1
 ## Author: Gil
 ## Dependencies: LibDBIcon-1.0
 ## SavedVariables: KeyKeeper
