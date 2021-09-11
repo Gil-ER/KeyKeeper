@@ -17,7 +17,7 @@ jobs:
 
       - name: Package Project
         run: |
-          zip -r KeyKeeper.zip KeyKeeper
+          zip -r KeyKeeper.zip KeyKeeper README.md
           
       - name: Create Release
         id: create_release
