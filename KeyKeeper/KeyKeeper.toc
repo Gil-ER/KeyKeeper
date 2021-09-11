@@ -2,7 +2,7 @@
 ## Title: Key Keeper
 ## Version: 1.0.1
 ## Author: Gil
-##Dependencies: LibDBIcon-1.0
+## Dependencies: LibDBIcon-1.0
 ## SavedVariables: KeyKeeper
 
 Output.lua
