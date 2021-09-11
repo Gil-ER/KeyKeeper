@@ -14,10 +14,13 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2
+        
+      - name: Copy Read me
+        run: cp -u README.md KeyKeeper        
 
       - name: Package Project
         run: |
-          zip -r KeyKeeper.zip KeyKeeper README.md
+          zip -r KeyKeeper.zip KeyKeeper 
           
       - name: Create Release
         id: create_release
