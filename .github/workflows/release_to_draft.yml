@@ -15,7 +15,7 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v2
         
-      - name: Copy Read me
+      - name: Copy Readme
         run: cp -u README.md KeyKeeper        
 
       - name: Package Project
