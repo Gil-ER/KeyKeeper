@@ -16,7 +16,10 @@ jobs:
         uses: actions/checkout@v2
         
       - name: Copy Readme
-        run: cp -u README.md KeyKeeper        
+        run: cp -u README.md KeyKeeper 
+
+      - name: Copy License
+        run: cp -u LICENSE KeyKeeper
 
       - name: Package Project
         run: |
