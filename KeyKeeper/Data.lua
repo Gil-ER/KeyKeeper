@@ -93,8 +93,13 @@ end;	--UpdateKey
  
  function ns:SendOneKey(toon)
 	--Send one toons data
-	local msg = toon .. "#" .. KeyKeeper["Toons"]["Key"] .. "#" .. KeyKeeper["Toons"]["Level"] .. "#" .. KeyKeeper["Toons"]["Date"];
-	ns:SendData(msg);
+	local key = KeyKeeper["Toons"][toon]["Key"];
+	local level = KeyKeeper["Toons"][toon]["Level"];
+	local dt = KeyKeeper["Toons"][toon]["Date"];
+	if key ~= nil or level ~= nil or dt ~= nil then
+		local msg = toon .. "#" .. key .. "#" .. level .. "#" .. dt;
+		ns:SendData(msg);
+	end;
  end;
 
  function ns:SendKeys()	
