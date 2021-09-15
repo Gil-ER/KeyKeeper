@@ -1,6 +1,7 @@
 ## Interface: 90100	
 ## Title: Key Keeper
 ## Version: 1.0.4
+## Notes: Tracks our group's mythic+ keystones.
 ## Author: Gil
 ## Dependencies: LibDBIcon-1.0
 ## SavedVariables: KeyKeeper
