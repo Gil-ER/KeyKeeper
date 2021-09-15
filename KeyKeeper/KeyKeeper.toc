@@ -2,6 +2,7 @@
 ## Title: Key Keeper
 ## Notes: Recording and sharing of our groups M+ keystones.
 ## Version: 1.0.4
+## Notes: Tracks our group's mythic+ keystones.
 ## Author: Gil
 ## Dependencies: LibDBIcon-1.0
 ## SavedVariables: KeyKeeper
