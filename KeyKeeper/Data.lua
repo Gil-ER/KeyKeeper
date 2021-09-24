@@ -6,6 +6,8 @@ ns.channel = "TurtleOverlords";					--communication channel
 ns.keyID = 0;
 ns.key = "";
 ns.level = 0;
+local _, title = GetAddOnInfo("KeyKeeper");
+_, ns.ver = strsplit("v", title);
 
 local function IsToonInTable(toon)
 	--if the toon isn't in the DB add a blank record
@@ -60,11 +62,13 @@ end;
 		--If this toon wasn't there it should be added by now
 		if KeyKeeper["Toons"][toon] == nil then	--2
 			--if no key is saved then add this one.
-			KeyKeeper["Toons"][toon] = {["Key"] = key, ["Level"] = level, ["Date"] = dt}; 		
+			KeyKeeper["Toons"][toon] = {["Key"] = key, ["Level"] = level, ["Date"] = dt}; 
+			if ns.debug then print("Adding a new key for ", toon); end;
 		else
 			--toon is there, is there a keystone
 			if KeyKeeper["Toons"][toon]["Key"] == nil then	--3
 				--no key so add this one
+				if ns.debug then print("Adding a new key for ", toon); end;
 				KeyKeeper["Toons"][toon] = {["Key"] = key, ["Level"] = level, ["Date"] = dt};
 			else
 				--there is a key, is it different
@@ -72,9 +76,11 @@ end;
 					--key is different, find newest one
 					if IsDateMoreRecent(toon, dt) then	--5
 						--Update the DB with newer data
+						if ns.debug then print("Updating ", toon, "'s key.", toon); end;
 						KeyKeeper["Toons"][toon] = {["Key"] = key, ["Level"] = level, ["Date"] = dt};
 					else
 						--we have newer data so send it out even if flag was false
+						if ns.debug then print("Sending our key for.", toon); end;
 						sendFlag = true;
 					end;	--5
 				else
@@ -88,7 +94,9 @@ end;
 	if sendFlag then 
 		ns:SendOneKey(toon); 
 	end;
-	if ns.Output:IsShown() then ns:ShowKeys(); end;
+	if ns.Output:IsShown() then ns:ShowKeys(); 
+		if ns.debug then print("Refreshing our chart.");  end;
+	end;
 end;	--UpdateKey
  
  function ns:SendOneKey(toon)
@@ -97,7 +105,7 @@ end;	--UpdateKey
 	local level = KeyKeeper["Toons"][toon]["Level"];
 	local dt = KeyKeeper["Toons"][toon]["Date"];
 	if key ~= nil or level ~= nil or dt ~= nil then
-		local msg = toon .. "#" .. key .. "#" .. level .. "#" .. dt;
+		local msg = toon .. "#" .. key .. "#" .. level .. "#" .. dt .. "#" .. ns,ver;
 		ns:SendData(msg);
 	end;
  end;

@@ -1,7 +1,7 @@
 ## Interface: 90100	
-## Title: Key Keeper
+## Title: Key Keeper v1.0.5
 ## Notes: Recording and sharing of our groups M+ keystones.
-## Version: 1.0.4
+## Version: 1.0.5
 ## Author: Gil
 ## Dependencies: LibDBIcon-1.0
 ## SavedVariables: KeyKeeper

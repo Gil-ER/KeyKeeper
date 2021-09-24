@@ -1,5 +1,7 @@
 local _, ns = ...;	
 
+ns.debug = false;
+
 --sets up arrow key navigation in chat edit box
 for i = 1, NUM_CHAT_WINDOWS do
 	_G["ChatFrame" ..i.. "EditBox"]:SetAltArrowKeyMode(false);
@@ -15,7 +17,14 @@ end;
 --key data frame
 SLASH_KEYKEEPER1 = "/kk"; 
 SLASH_KEYKEEPER2 = "/keykeeper";	
-SlashCmdList.KEYKEEPER = function()	ns:ShowKeys(); end;
+SlashCmdList.KEYKEEPER = function(arg)	
+	if arg == "debug" then
+		ns.debug = not ns.debug;
+		if ns.debug then print("Debug mode on"); else print("Debug mode off"); end;
+	else 
+		ns:ShowKeys();
+	end;
+end;
 
 --Mini map button stuff
 local function KeyKeeperMiniMap(button)
@@ -119,12 +128,18 @@ function frame:OnEvent(event, ...)
 		if n ~= ns.player then
 			if Message == "refresh" then
 				--another user requested a refresh, send your data
+				if ns.debug then print("Requested a refresh."); end;
 				ns:SendKeys();						
 			else
 				--another user sent data, just update our data 
 				--false flag prevents sending out again
 				--parse out variables from message
-				local toon, stone, level, dt = strsplit( "#", Message );
+				local toon, stone, level, dt, ver = strsplit( "#", Message );
+				if ver ~= nil then
+					if ns.debug then print(n, " is using version ", ver); end;
+				else
+					if ns.debug then print(n, " is using an old version."); end;
+				end;
 				ns:UpdateKey(toon, stone, level, dt, false);	
 			end;
 			if refreshFlag then
