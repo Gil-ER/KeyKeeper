@@ -84,7 +84,7 @@ function frame:OnEvent(event, ...)
 			ns:UpdateKey(ns.player, ns.key, ns.level, date("%Y %m %d %H:%M"), true);			
 		end;	
 		ns:SendKeys();
-		ns:SendData("refresh");
+		ns:SendData("refresh#", ns.ver);
 		refreshFlag = false;
 		frame:UnregisterEvent("ZONE_CHANGED");
 	end;
@@ -126,7 +126,8 @@ function frame:OnEvent(event, ...)
 		--Ingore messages from ourself
 		local n = strsplit("-", Source);
 		if n ~= ns.player then
-			if Message == "refresh" then
+			local m = strsplit( "#", Message );
+			if m == "refresh" then
 				--another user requested a refresh, send your data
 				if ns.debug then print("Requested a refresh."); end;
 				ns:SendKeys();						
@@ -135,11 +136,7 @@ function frame:OnEvent(event, ...)
 				--false flag prevents sending out again
 				--parse out variables from message
 				local toon, stone, level, dt, ver = strsplit( "#", Message );
-				if ver ~= nil then
-					if ns.debug then print(n, " is using version ", ver); end;
-				else
-					if ns.debug then print(n, " is using an old version."); end;
-				end;
+				print(n, " sent ", Message);
 				ns:UpdateKey(toon, stone, level, dt, false);	
 			end;
 			if refreshFlag then

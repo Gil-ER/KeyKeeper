@@ -105,7 +105,7 @@ end;	--UpdateKey
 	local level = KeyKeeper["Toons"][toon]["Level"];
 	local dt = KeyKeeper["Toons"][toon]["Date"];
 	if key ~= nil or level ~= nil or dt ~= nil then
-		local msg = toon .. "#" .. key .. "#" .. level .. "#" .. dt .. "#" .. ns,ver;
+		local msg = toon .. "#" .. key .. "#" .. level .. "#" .. dt .. "#" .. ns.ver;
 		ns:SendData(msg);
 	end;
  end;
@@ -119,7 +119,7 @@ end;	--UpdateKey
 	if cID > 0 then
 		for index,value in pairs(KeyKeeper["Toons"]) do 
 			msg = index .. "#" .. KeyKeeper["Toons"][index]["Key"] .. "#" .. KeyKeeper["Toons"][index]["Level"] 
-						.. "#" .. KeyKeeper["Toons"][index]["Date"];
+						.. "#" .. KeyKeeper["Toons"][index]["Date"] .. "#" .. ns.ver;
 			if ns.debug then print("Sending ", msg); end;
 			local r = C_ChatInfo.SendAddonMessage (ns.prefix, msg, "CHANNEL", cID);
 		end;
