@@ -120,6 +120,7 @@ end;	--UpdateKey
 		for index,value in pairs(KeyKeeper["Toons"]) do 
 			msg = index .. "#" .. KeyKeeper["Toons"][index]["Key"] .. "#" .. KeyKeeper["Toons"][index]["Level"] 
 						.. "#" .. KeyKeeper["Toons"][index]["Date"];
+			if ns.debug then print("Sending ", msg); end;
 			local r = C_ChatInfo.SendAddonMessage (ns.prefix, msg, "CHANNEL", cID);
 		end;
 	end;
@@ -170,7 +171,12 @@ end;
 			
 function ns:SendData(msg)
 	local cID = GetChannelName(ns.channel);
-	if cID > 0 then C_ChatInfo.SendAddonMessage (ns.prefix, "refresh", "CHANNEL", cID); end;
+	if cID > 0 then 
+		C_ChatInfo.SendAddonMessage (ns.prefix, msg, "CHANNEL", cID); 
+		if ns.debug then print("Sending ", msg); end;
+	else
+		if ns.debug then print("Refresh error, No channel.", toon); end;
+	end;
 end;
 		
 			
