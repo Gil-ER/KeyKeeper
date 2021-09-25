@@ -49,6 +49,8 @@ local function IsKeyDifferent(toon, key, level)
 end;
  
  function ns:UpdateKey(toon, key, level, dt, sendFlag)
+	--if any fields are nil don't save anything
+	if (toon == nil) or (stone == nil) or (level == nil) or (dt == nil) then return; end;
 	--set sendFlag false if you are updating recieved data so don't send it out again
 	if sendFlag == nil then sendFlag = true; end;
 	--Tuesday at 9:00 is addon reset time so dont accept data earlier then tuesday @ 9:00
@@ -118,10 +120,15 @@ end;	--UpdateKey
 	local cID = GetChannelName(ns.channel);
 	if cID > 0 then
 		for index,value in pairs(KeyKeeper["Toons"]) do 
-			msg = index .. "#" .. KeyKeeper["Toons"][index]["Key"] .. "#" .. KeyKeeper["Toons"][index]["Level"] 
-						.. "#" .. KeyKeeper["Toons"][index]["Date"] .. "#" .. ns.ver;
-			if ns.debug then print("Sending ", msg); end;
-			local r = C_ChatInfo.SendAddonMessage (ns.prefix, msg, "CHANNEL", cID);
+			local key = KeyKeeper["Toons"][index]["Key"];
+			local level = KeyKeeper["Toons"][index]["Level"];
+			local dt = KeyKeeper["Toons"][index]["Date"];
+			--Don't sent if invalid
+			if (key ~= nil) and (level ~= nil) and (dt ~= nil) then
+				msg = index .. "#" .. key .. "#" .. level .. "#" .. dt .. "#" .. ns.ver;
+				if ns.debug then print("Sending ", msg); end;
+				local r = C_ChatInfo.SendAddonMessage (ns.prefix, msg, "CHANNEL", cID);
+			end;
 		end;
 	end;
  end; 
