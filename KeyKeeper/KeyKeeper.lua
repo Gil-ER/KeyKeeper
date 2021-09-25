@@ -84,7 +84,7 @@ function frame:OnEvent(event, ...)
 			ns:UpdateKey(ns.player, ns.key, ns.level, date("%Y %m %d %H:%M"), true);			
 		end;	
 		ns:SendKeys();
-		ns:SendData("refresh#", ns.ver);
+		ns:SendData("refresh");
 		refreshFlag = false;
 		frame:UnregisterEvent("ZONE_CHANGED");
 	end;
@@ -126,10 +126,9 @@ function frame:OnEvent(event, ...)
 		--Ingore messages from ourself
 		local n = strsplit("-", Source);
 		if n ~= ns.player then
-			local m = strsplit( "#", Message );
-			if m == "refresh" then
+			if Message == "refresh" then
 				--another user requested a refresh, send your data
-				if ns.debug then print("Requested a refresh."); end;
+				if ns.debug then print(n, " requested a refresh."); end;
 				ns:SendKeys();						
 			else
 				--another user sent data, just update our data 
