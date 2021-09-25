@@ -135,7 +135,7 @@ function frame:OnEvent(event, ...)
 				--false flag prevents sending out again
 				--parse out variables from message
 				local toon, stone, level, dt, ver = strsplit( "#", Message );
-				print(n, " sent ", Message);
+				if ns.debug then print(n, " sent ", Message); end;
 				ns:UpdateKey(toon, stone, level, dt, false);	
 			end;
 			if refreshFlag then
