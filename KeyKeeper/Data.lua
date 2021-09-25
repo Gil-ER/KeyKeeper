@@ -50,7 +50,7 @@ end;
  
  function ns:UpdateKey(toon, key, level, dt, sendFlag)
 	--if any fields are nil don't save anything
-	if (toon == nil) or (stone == nil) or (level == nil) or (dt == nil) then return; end;
+	if (toon == nil) or (key == nil) or (level == nil) or (dt == nil) then return; end;
 	--set sendFlag false if you are updating recieved data so don't send it out again
 	if sendFlag == nil then sendFlag = true; end;
 	--Tuesday at 9:00 is addon reset time so dont accept data earlier then tuesday @ 9:00
@@ -78,7 +78,7 @@ end;
 					--key is different, find newest one
 					if IsDateMoreRecent(toon, dt) then	--5
 						--Update the DB with newer data
-						if ns.debug then print("Updating ", toon, "'s key.", toon); end;
+						if ns.debug then print("Updating ", toon, "'s key.", n, "'s data."); end;
 						KeyKeeper["Toons"][toon] = {["Key"] = key, ["Level"] = level, ["Date"] = dt};
 					else
 						--we have newer data so send it out even if flag was false
