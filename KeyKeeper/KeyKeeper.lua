@@ -17,10 +17,12 @@ end;
 --key data frame
 SLASH_KEYKEEPER1 = "/kk"; 
 SLASH_KEYKEEPER2 = "/keykeeper";	
-SlashCmdList.KEYKEEPER = function(arg)	
-	if arg == "debug" then
+SlashCmdList.KEYKEEPER = function(arg)
+	arg = arg:lower();
+	if (arg == "debug") or (arg == "d") then
 		ns.debug = not ns.debug;
 		if ns.debug then print("Debug mode on"); else print("Debug mode off"); end;
+		
 	else 
 		ns:ShowKeys();
 	end;
@@ -107,6 +109,9 @@ function frame:OnEvent(event, ...)
 				--if we have passed the reset time then reset
 				ns:ResetDataFile();
 			end;
+			--ns:GetSaveResetTime() will ensure KeyKeeper["settings"] is valid
+			if KeyKeeper["settings"]["debug"] == nil then KeyKeeper["settings"]["debug"] = false; end;
+			ns.debug = KeyKeeper["settings"]["debug"];
 			--only allow this to run the first time then stop monitoring
 			frame:UnregisterEvent("PLAYER_ENTERING_WORLD");
 		else
