@@ -21,8 +21,8 @@ SlashCmdList.KEYKEEPER = function(arg)
 	arg = arg:lower();
 	if (arg == "debug") or (arg == "d") then
 		ns.debug = not ns.debug;
+		KeyKeeper["settings"]["debug"] = ns.debug;
 		if ns.debug then print("Debug mode on"); else print("Debug mode off"); end;
-		
 	else 
 		ns:ShowKeys();
 	end;
@@ -112,6 +112,7 @@ function frame:OnEvent(event, ...)
 			--ns:GetSaveResetTime() will ensure KeyKeeper["settings"] is valid
 			if KeyKeeper["settings"]["debug"] == nil then KeyKeeper["settings"]["debug"] = false; end;
 			ns.debug = KeyKeeper["settings"]["debug"];
+			if ns.debug then print("KeyKeeper: Debug mode active."); end;
 			--only allow this to run the first time then stop monitoring
 			frame:UnregisterEvent("PLAYER_ENTERING_WORLD");
 		else
