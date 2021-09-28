@@ -78,7 +78,7 @@ end;
 					--key is different, find newest one
 					if IsDateMoreRecent(toon, dt) then	--5
 						--Update the DB with newer data
-						if ns.debug then print("Updating ", toon, "'s key.", n, "'s data."); end;
+						if ns.debug then print("Updating ", toon, "'s key."); end;
 						KeyKeeper["Toons"][toon] = {["Key"] = key, ["Level"] = level, ["Date"] = dt};
 					else
 						--we have newer data so send it out even if flag was false
