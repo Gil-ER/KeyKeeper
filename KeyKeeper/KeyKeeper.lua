@@ -99,6 +99,8 @@ function frame:OnEvent(event, ...)
 			ns.key = C_ChallengeMode.GetMapUIInfo(ns.keyID);
 			ns.level = format("%s", C_MythicPlus.GetOwnedKeystoneLevel());	
 			--update the table and send data out (true flag)
+			local msg = ns.level .. " - " .. ns.key;
+			SendChatMessage( msg, "CHANNEL", nil, id );
 			ns:UpdateKey(ns.player, ns.key, ns.level, date("%Y %m %d %H:%M"), true);			
 		end;
 	end;
