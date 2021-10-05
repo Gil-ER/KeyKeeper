@@ -93,15 +93,16 @@ function frame:OnEvent(event, ...)
 	
 	if event == "BAG_UPDATE"then
 		--check key, if different update local data
-		local id = C_MythicPlus.GetOwnedKeystoneChallengeMapID();
-		if id ~= nil and ns.keyID ~= id then 
-			ns.keyID = id;
-			ns.key = C_ChallengeMode.GetMapUIInfo(ns.keyID);
-			ns.level = format("%s", C_MythicPlus.GetOwnedKeystoneLevel());	
-			--update the table and send data out (true flag)
-			local msg = ns.level .. " - " .. ns.key;
-			SendChatMessage( msg, "CHANNEL", nil, id );
-			ns:UpdateKey(ns.player, ns.key, ns.level, date("%Y %m %d %H:%M"), true);			
+		local id = C_MythicPlus.GetOwnedKeystoneChallengeMapID();			
+		if id ~= nil then
+			local lvl = format("%s", C_MythicPlus.GetOwnedKeystoneLevel());
+			if ((ns.keyID ~= id) or (ns.level ~= lvl)) then 
+				ns.keyID = id;
+				ns.key = C_ChallengeMode.GetMapUIInfo(ns.keyID);
+				ns.level = lvl;
+				--update the table and send data out (true flag)
+				ns:UpdateKey(ns.player, ns.key, ns.level, date("%Y %m %d %H:%M"), true);	.
+			end;
 		end;
 	end;
 	
