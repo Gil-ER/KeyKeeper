@@ -86,6 +86,13 @@ ns.Output:SetScript("OnDragStop", function(self) self:StopMovingOrSizing(); end)
 ns.Output:SetSize(300, 300);
 ns.Output:SetPoint("TOPLEFT");
 
+--Add the title
+ns.Output.Title = ns.Output:CreateFontString(nil, "OVERLAY", "GameFontNormal");
+ns.Output.Title:SetPoint("TOPLEFT",0,-5);
+ns.Output.Title:SetWidth(275);
+ns.Output.Title:SetJustifyH("CENTER");
+ns.Output.Title:SetText( "Key Keeper" );
+
 CreateStringTable();
 
 --Add the buttons and handlers
