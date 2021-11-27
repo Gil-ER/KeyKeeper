@@ -44,8 +44,7 @@ local kkLDB = LibStub("LibDataBroker-1.1"):NewDataObject("key!", {
 	icon = "Interface\\Icons\\inv_misc_key_05",
 	OnClick = function(_, button) KeyKeeperMiniMap(button) end,
 })
-local icon = LibStub("LibDBIcon-1.0");
-icon:Register("key!", kkLDB, false)
+
 
 function kkLDB:OnTooltipShow()
 	self:AddLine("             Key Keeper");
@@ -107,6 +106,9 @@ function frame:OnEvent(event, ...)
 	end;
 	
 	if event == "PLAYER_ENTERING_WORLD" then 
+		local icon = LibStub("LibDBIcon-1.0", true);
+		if not KeyKeeperLDBIconDB then KeyKeeperLDBIconDB = {} end;
+		icon:Register("KeyKeeper", kkLDB, KeyKeeperLDBIconDB)
 		if GetRealmName() == "Earthen Ring" then
 			if ns:GetSaveResetTime() < time() then
 				--if we have passed the reset time then reset
