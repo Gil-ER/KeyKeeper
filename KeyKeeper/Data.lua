@@ -192,7 +192,7 @@ function ns:ChatKeys()
 		local level = KeyKeeper["Toons"][index]["Level"];
 		--Don't send if invalid
 		if (key ~= nil) and (level ~= nil) then
-			msg = level .. " " .. key .. " " .. index;
+			msg = index .. "    " .. level .. "-" .. key;
 			SendChatMessage( msg ,"PARTY" );
 		end;
 	end;
