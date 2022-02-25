@@ -96,9 +96,9 @@ ns.Output.Title:SetText( "Key Keeper" );
 CreateStringTable();
 
 --Add the buttons and handlers
-ButtonFactory("Update Chart", "Refresh the chart from the data\nin your database incase the data\nhas been updated by another user.");
+ButtonFactory("List Keys", "Lists the keys in party chat.");
 ButtonFactory("Update Data", "Sends out your data and collects\nanything updated by other users.\nThis should be folowed up by\nclicking the 'Update Chart'button.\nIt will take a few seconds to finish\nthe update process.");
-ns.button[1]:SetScript("OnClick", function(self) ns:ShowKeys(); end);
+ns.button[1]:SetScript("OnClick", function(self) ns:SendKeys(); ns:SendData("refresh"); ns:ChatKeys(); end);
 ns.button[2]:SetScript("OnClick", function(self) ns:SendKeys(); ns:SendData("refresh"); end);
 
 ns.Output:Hide();
