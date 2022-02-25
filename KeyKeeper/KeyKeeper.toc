@@ -1,5 +1,5 @@
 ## Interface: 90200
-## Title: Key Keeper v1.0.8
+## Title: Key Keeper v1.0.9
 ## Notes: Recording and sharing of our groups M+ keystones.
 ## Version: 1.0.9
 ## Author: Gil
