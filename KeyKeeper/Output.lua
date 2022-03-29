@@ -83,7 +83,7 @@ ns.Output:SetScript("OnDragStart", function(self) self:StartMoving() end);
 ns.Output:SetScript("OnDragStart", function(self) self:StartMoving() end);
 ns.Output:SetScript("OnDragStop", function(self) self:StopMovingOrSizing(); end);
 --Size (width, height)
-ns.Output:SetSize(300, 300);
+ns.Output:SetSize(325, 300);
 ns.Output:SetPoint("TOPLEFT");
 
 --Add the title
