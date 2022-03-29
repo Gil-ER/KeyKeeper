@@ -19,6 +19,10 @@ SLASH_KEYKEEPER1 = "/kk";
 SLASH_KEYKEEPER2 = "/keykeeper";	
 SlashCmdList.KEYKEEPER = function(arg)
 	arg = arg:lower();
+	if arg == "reset" then 
+		ns.Output:ClearAllPoints();
+		ns.Output:SetPoint("CENTER",UIParent);
+	end;
 	if (arg == "debug") or (arg == "d") then
 		ns.debug = not ns.debug;
 		KeyKeeper["settings"]["debug"] = ns.debug;
