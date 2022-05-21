@@ -12,6 +12,16 @@ local Dungeons = {
 	"Tazavesh: Streets of Wonder",
 	"Tazavesh: So'leah's Gambit"
 }
+sort(Dungeons);
+
+local Toons = {
+	"Gildina",
+	"Tem",
+	"Junpa",
+	"Kaandew",
+	"Hezikhan"
+}
+sort(Toons);
 
 --- Opts:
 ---     name (string): Name of the dropdown (lowercase)
@@ -76,6 +86,7 @@ ManFrame.Title:SetJustifyH("CENTER");
 ManFrame.Title:SetText( "Add/Update A Key" );
 ManFrame.dung = Dungeons[1];
 ManFrame.lvl = "12";
+ManFrame.char = "Tem";
 
 local dung_opts = {
     ['name']='dungeon',
@@ -85,7 +96,7 @@ local dung_opts = {
     ['defaultVal']=ManFrame.dung, 
     ['changeFunc']=function(dropdown_frame, dropdown_val)
         ManFrame.dung = dropdown_val;
-		print(ManFrame.lvl, "  ", ManFrame.dung);
+		print(ManFrame.char, "  ", ManFrame.lvl, "  ", ManFrame.dung);
     end
 }
 
@@ -97,7 +108,19 @@ local lvl_opts = {
     ['defaultVal']=ManFrame.lvl, 
     ['changeFunc']=function(dropdown_frame, dropdown_val)
         ManFrame.lvl = dropdown_val;
-		print(ManFrame.lvl, "  ", ManFrame.dung);
+		print(ManFrame.char, "  ", ManFrame.lvl, "  ", ManFrame.dung);
+    end
+}
+
+local toon_opts = {
+    ['name']='toon',
+    ['parent']=ManFrame,
+    ['title']='Toon',
+    ['items']= Toons,
+    ['defaultVal']='Tem', 
+    ['changeFunc']=function(dropdown_frame, dropdown_val)
+        ManFrame.char = dropdown_val;
+		print(ManFrame.char, "  ", ManFrame.lvl, "  ", ManFrame.dung);
     end
 }
 
@@ -106,15 +129,17 @@ ManFrame.DungDD:SetPoint("TOPLEFT", ManFrame, "TOPLEFT", 20, -50);
 ManFrame.LvlDD = createDropdown(lvl_opts);
 ManFrame.LvlDD:SetPoint("TOPLEFT", ManFrame, "TOPLEFT", 20, -100);
 ManFrame.LvlDD:SetWidth(50);
+ManFrame.ToonDD = createDropdown(toon_opts);
+ManFrame.ToonDD:SetPoint("TOPLEFT", ManFrame, "TOPLEFT", 20, -150);
+--Add the buttons and handlers
 
-ManFrame.ebox = CreateFrame("EditBox", nil, ManFrame, "InputBoxTemplate"); --CreateFrame("EditBox", nil, UIConfig, "InputBoxTemplate");
-ManFrame.ebox:SetSize(200,100);
-ManFrame.ebox:SetPoint("TOPLEFT", ManFrame, "TOPLEFT", 40, -120);
-ManFrame.ebox:SetText("Tem");
-ManFrame.eboxCaption = ManFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal");
-ManFrame.eboxCaption:SetPoint("TOPLEFT", ManFrame.ebox, "TOPLEFT", 0 , 20);
-ManFrame.eboxCaption:SetWidth(275);
-ManFrame.eboxCaption:SetText("Character");
+
+
+
+--ManFrame.ButtonFactory("List Keys", "Lists the keys in party chat.");
+--ManFrame.ButtonFactory("Update Data", "Sends out your data and collects\nanything updated by other users.\nThis should be folowed up by\nclicking the 'Update Chart'button.\nIt will take a few seconds to finish\nthe update process.");
+--ManFrame.button[1]:SetScript("OnClick", function(self) end);
+--ManFrame.button[2]:SetScript("OnClick", function(self) end);
 
 --ManFrame:Hide();
 function ns:DL ()
