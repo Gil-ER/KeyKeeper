@@ -101,14 +101,22 @@ local lvl_opts = {
     end
 }
 
-ManFrame.DungDD = createDropdown(dung_opts)
+ManFrame.DungDD = createDropdown(dung_opts);
 ManFrame.DungDD:SetPoint("TOPLEFT", ManFrame, "TOPLEFT", 20, -50);
-ManFrame.DungDD = createDropdown(lvl_opts)
-ManFrame.DungDD:SetPoint("TOPLEFT", ManFrame, "TOPLEFT", 20, -100);
-ManFrame.DungDD:SetWidth(50);
+ManFrame.LvlDD = createDropdown(lvl_opts);
+ManFrame.LvlDD:SetPoint("TOPLEFT", ManFrame, "TOPLEFT", 20, -100);
+ManFrame.LvlDD:SetWidth(50);
 
+ManFrame.ebox = CreateFrame("EditBox", nil, ManFrame, "InputBoxTemplate"); --CreateFrame("EditBox", nil, UIConfig, "InputBoxTemplate");
+ManFrame.ebox:SetSize(200,100);
+ManFrame.ebox:SetPoint("TOPLEFT", ManFrame, "TOPLEFT", 40, -120);
+ManFrame.ebox:SetText("Tem");
+ManFrame.eboxCaption = ManFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal");
+ManFrame.eboxCaption:SetPoint("TOPLEFT", ManFrame.ebox, "TOPLEFT", 0 , 20);
+ManFrame.eboxCaption:SetWidth(275);
+ManFrame.eboxCaption:SetText("Character");
 
-ManFrame:Hide();
+--ManFrame:Hide();
 function ns:DL ()
 	ManFrame:Show();
 end;
