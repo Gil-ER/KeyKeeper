@@ -19,8 +19,9 @@ SLASH_KEYKEEPER1 = "/kk";
 SLASH_KEYKEEPER2 = "/keykeeper";	
 SlashCmdList.KEYKEEPER = function(arg)
 	arg = arg:lower();
-	if arg == "in" then
+	if arg == "input" then
 		ns:DL ();
+		return;
 	end;
 	if arg == "reset" then 
 		ns.Output:ClearAllPoints();
@@ -38,7 +39,11 @@ end;
 --Mini map button stuff
 local function KeyKeeperMiniMap(button)
 	if button == "LeftButton" then
-		ns:ShowKeys();
+		if IsShiftKeyDown() then
+			ns:DL ();
+		else
+			ns:ShowKeys();
+		end;
 	elseif button == "MiddleButton" then
 		SendChatMessage("KAANDEW..." ,"Yell");
 	elseif button == "RightButton" then
@@ -57,6 +62,7 @@ function kkLDB:OnTooltipShow()
 	self:AddLine("             Key Keeper");
 	self:AddLine(" ");
 	self:AddLine("     Left Click - Show Keys.     ");	
+	self:AddLine("     <SHIFT> Left Click - Add Key     ");	
 	self:AddLine("     Middle Click - Kaandew...     ");
 	self:AddLine("     Right Click - Update Data.     ");
 end

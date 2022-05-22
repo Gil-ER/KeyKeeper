@@ -19,9 +19,52 @@ local Toons = {
 	"Tem",
 	"Junpa",
 	"Kaandew",
-	"Hezikhan"
+	"Hezzakan"
 }
 sort(Toons);
+-------------------------------------------------------------------------
+-- ToolTip functions
+-- 		The show function relies on the tooltip being saved in the control 
+--		so it can be accessed as self.ttip
+-------------------------------------------------------------------------
+function ns.TT_Show(self, position)
+	--self - the control that called the function
+	--position 	- The orientation of the tooltip in relation to the control ie:"LEFT"
+	--Usage		- 'control':SetScript("OnEnter", function() addon.TT_Show('control', "LEFT"); end);
+	if position == nil then position = "LEFT"; end;
+	GameTooltip:SetOwner(self, position);
+	GameTooltip:AddLine(self.ttip);
+	GameTooltip:Show();
+end;
+function ns.TT_Hide()
+	GameTooltip:Hide();
+end;
+
+function ns:CreateButton(point, relativeFrame, relativePoint, xOff, yOff, width, height, caption, ttip)
+-- Places a button on a frame
+-- point			-reference point on this button (TOPLEFT)
+-- relativeFrame	-position button relative to this frame
+-- relativePoint	-point on relativeFrame
+-- xOff				-x offset
+-- yOff				-y Offset
+-- width			-button width
+-- height			-button height
+-- caption			-Text to appear on the button
+-- ttip				-tooltip to show when the button is moused over
+-- returns the button
+	local btn = CreateFrame("Button", nil, relativeFrame, "GameMenuButtonTemplate");
+	btn:SetSize(width, height);
+	btn:SetText(caption);
+	btn:SetNormalFontObject("GameFontNormalLarge");
+	btn:SetHighlightFontObject("GameFontHighlightLarge");
+	btn:SetPoint(point, relativeFrame, relativePoint, xOff, yOff);
+	btn.ttip = ttip;
+	btn:SetScript("OnEnter", ns.TT_Show);
+	btn:SetScript("OnLeave", ns.TT_Hide);
+	return btn;
+end;
+
+
 
 --- Opts:
 ---     name (string): Name of the dropdown (lowercase)
@@ -104,7 +147,7 @@ local lvl_opts = {
     ['name']='lvl',
     ['parent']=ManFrame,
     ['title']='Key Level',
-    ['items']= {"2     ","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20"},
+    ['items']= {"2         ","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20"},
     ['defaultVal']=ManFrame.lvl, 
     ['changeFunc']=function(dropdown_frame, dropdown_val)
         ManFrame.lvl = dropdown_val;
@@ -127,21 +170,19 @@ local toon_opts = {
 ManFrame.DungDD = createDropdown(dung_opts);
 ManFrame.DungDD:SetPoint("TOPLEFT", ManFrame, "TOPLEFT", 20, -50);
 ManFrame.LvlDD = createDropdown(lvl_opts);
-ManFrame.LvlDD:SetPoint("TOPLEFT", ManFrame, "TOPLEFT", 20, -100);
-ManFrame.LvlDD:SetWidth(50);
+ManFrame.LvlDD:SetPoint("BOTTOMRIGHT", ManFrame.DungDD, "BOTTOMRIGHT", 0,  -60);
 ManFrame.ToonDD = createDropdown(toon_opts);
-ManFrame.ToonDD:SetPoint("TOPLEFT", ManFrame, "TOPLEFT", 20, -150);
+ManFrame.ToonDD:SetPoint("BOTTOMLEFT", ManFrame.DungDD, "BOTTOMLEFT", 0, -60);
+ManFrame:SetWidth(ManFrame.DungDD:GetWidth() + 40);
+ManFrame:SetHeight( ManFrame:GetTop() - ManFrame.DungDD:GetBottom() + 125);
 --Add the buttons and handlers
+local w = ManFrame.DungDD:GetWidth() / 2 - 13;
+ManFrame.OK = ns:CreateButton("BOTTOMRIGHT", ManFrame.LvlDD, "BOTTOMRIGHT", -11, -50, w, 40, "OK", "Add the key defined in\nthe form above to the list.");
+ManFrame.Cancel = ns:CreateButton("BOTTOMRIGHT", ManFrame.OK, "BOTTOMLEFT", 0, 0, w, 40, "Cancel", "Close this dialogue\nand discard any changes.");
+ManFrame.OK:SetScript("OnClick", function(self) ns:UpdateKey(ManFrame.char, ManFrame.dung, ManFrame.lvl, date("%Y %m %d %H:%M"), true); ManFrame:Hide(); end);
+ManFrame.Cancel:SetScript("OnClick", function(self) ManFrame:Hide(); end);
 
-
-
-
---ManFrame.ButtonFactory("List Keys", "Lists the keys in party chat.");
---ManFrame.ButtonFactory("Update Data", "Sends out your data and collects\nanything updated by other users.\nThis should be folowed up by\nclicking the 'Update Chart'button.\nIt will take a few seconds to finish\nthe update process.");
---ManFrame.button[1]:SetScript("OnClick", function(self) end);
---ManFrame.button[2]:SetScript("OnClick", function(self) end);
-
---ManFrame:Hide();
+ManFrame:Hide();
 function ns:DL ()
 	ManFrame:Show();
 end;
