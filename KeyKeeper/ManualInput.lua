@@ -141,17 +141,21 @@ local function createDropdown(opts)
     return dropdown
 end
 
---Create a frame
-local ManFrame = CreateFrame("Frame", "kkManualInputFrame", UIParent, "BasicFrameTemplate");
-ManFrame:SetSize(325, 300);
-ManFrame:SetPoint("CENTER", UIParent, "CENTER");
-
---Add the title
-ManFrame.Title = ManFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal");
-ManFrame.Title:SetPoint("TOPLEFT",0,-5);
-ManFrame.Title:SetWidth(275);
-ManFrame.Title:SetJustifyH("CENTER");
-ManFrame.Title:SetText( "Add/Update A Key" );
+--	Creates a frame
+local opts = {
+	title = "Add/Update A Key",
+	anchor = "CENTER", 
+	parent = UIParent,
+	relFrame = UIParent,
+	relPoint = "CENTER",
+	xOff = 0,
+	yOff = 0,
+	width = 325,
+	height = 300,
+	isMovable = false,
+	isSizable = false
+}
+local ManFrame = ns:createFrame(opts)
 ManFrame.dung = Dungeons[1];
 ManFrame.lvl = "12";
 ManFrame.char = "Tem";
@@ -232,7 +236,7 @@ local cancelButton = {
 			pressFunc = (function (self) ManFrame:Hide(); end);
 }
 ManFrame.Cancel = ns:CreateButton( cancelButton );
-
+opts = nil;
 ManFrame:Hide();
 function ns:DL ()
 	ManFrame:Show();
