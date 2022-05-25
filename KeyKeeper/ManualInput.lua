@@ -40,18 +40,43 @@ function ns.TT_Hide()
 	GameTooltip:Hide();
 end;
 
-function ns:CreateButton(point, relativeFrame, relativePoint, xOff, yOff, width, height, caption, ttip)
--- Places a button on a frame
--- point			-reference point on this button (TOPLEFT)
--- relativeFrame	-position button relative to this frame
--- relativePoint	-point on relativeFrame
--- xOff				-x offset
--- yOff				-y Offset
--- width			-button width
--- height			-button height
--- caption			-Text to appear on the button
--- ttip				-tooltip to show when the button is moused over
--- returns the button
+--[[	opts:
+			name (string)			name of button (lowercase)
+			anchor (string)			anchor point of this button (TOPLEFT)
+			parent (Frame)			parent frame of the button
+			relFrame (Frame)		position button relative to this frame
+			relPoint (string)		position this button relative to this point (TOPLEFT)
+			xOff (number)			x offset
+			yOff (number)			y Offset
+			width (number)			button width
+			height (number)			button height
+			caption	(string)		Text to appear on the button
+			ttip (string)			tooltip to show when the button is moused over (optional)
+			pressFunc (Function)	A custom function to be called when the button id pressed (optional).
+			
+		returns the button
+]]
+function ns:CreateButton(opts)
+	local btn = CreateFrame("Button", nil, opts.parent, "GameMenuButtonTemplate");
+	btn:SetSize(opts.width, opts.height);
+	btn:SetText(opts.caption);
+	btn:SetNormalFontObject("GameFontNormalLarge");
+	btn:SetHighlightFontObject("GameFontHighlightLarge");
+	btn:SetPoint(opts.anchor, opts.relFrame, opts.relPoint, opts.xOff, opts.yOff);
+	if (opts.ttip ~= nil) or (opts.ttip ~= "") then 
+		btn.ttip = opts.ttip;
+		btn:SetScript("OnEnter", ns.TT_Show);
+		btn:SetScript("OnLeave", ns.TT_Hide);
+	end;
+	if opts.pressFunc ~= nil then 
+		btn:SetScript("OnClick", function(self, button, down)
+			opts.pressFunc(self, button)
+		end)
+	end;
+	return btn;	
+end;
+
+--[[
 	local btn = CreateFrame("Button", nil, relativeFrame, "GameMenuButtonTemplate");
 	btn:SetSize(width, height);
 	btn:SetText(caption);
@@ -64,7 +89,7 @@ function ns:CreateButton(point, relativeFrame, relativePoint, xOff, yOff, width,
 	return btn;
 end;
 
-
+]]
 
 --- Opts:
 ---     name (string): Name of the dropdown (lowercase)
@@ -177,10 +202,36 @@ ManFrame:SetWidth(ManFrame.DungDD:GetWidth() + 40);
 ManFrame:SetHeight( ManFrame:GetTop() - ManFrame.DungDD:GetBottom() + 125);
 --Add the buttons and handlers
 local w = ManFrame.DungDD:GetWidth() / 2 - 13;
-ManFrame.OK = ns:CreateButton("BOTTOMRIGHT", ManFrame.LvlDD, "BOTTOMRIGHT", -11, -50, w, 40, "OK", "Add the key defined in\nthe form above to the list.");
-ManFrame.Cancel = ns:CreateButton("BOTTOMRIGHT", ManFrame.OK, "BOTTOMLEFT", 0, 0, w, 40, "Cancel", "Close this dialogue\nand discard any changes.");
-ManFrame.OK:SetScript("OnClick", function(self) ns:UpdateKey(ManFrame.char, ManFrame.dung, ManFrame.lvl, date("%Y %m %d %H:%M"), true); ManFrame:Hide(); end);
-ManFrame.Cancel:SetScript("OnClick", function(self) ManFrame:Hide(); end);
+local okButton = {
+			name = "ok",
+			anchor = "BOTTOMRIGHT",
+			parent = ManFrame,
+			relFrame = ManFrame.LvlDD,
+			relPoint = "BOTTOMRIGHT",
+			xOff = -11,
+			yOff = -50,
+			width = w,
+			height = 40,
+			caption	= "OK",
+			ttip = "Add the key defined in\nthe form above to the list.", 			
+			pressFunc = (function (self) ns:UpdateKey(ManFrame.char, ManFrame.dung, ManFrame.lvl, date("%Y %m %d %H:%M"), true); ManFrame:Hide(); end);
+}
+ManFrame.OK = ns:CreateButton( okButton );
+local cancelButton = {
+			name = "cancel",
+			anchor = "BOTTOMRIGHT",
+			parent = ManFrame,
+			relFrame = ManFrame.OK,
+			relPoint = "BOTTOMLEFT",
+			xOff = 0,
+			yOff = 0,
+			width = w,
+			height = 40,
+			caption	= "Cancel", 
+			ttip = "Close this dialogue\nand discard any changes.",
+			pressFunc = (function (self) ManFrame:Hide(); end);
+}
+ManFrame.Cancel = ns:CreateButton( cancelButton );
 
 ManFrame:Hide();
 function ns:DL ()
