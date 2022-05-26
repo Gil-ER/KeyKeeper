@@ -2,38 +2,6 @@
 local addon, ns = ...;
 
 
---	Creates a Dropdown (Example)
---	local opts = {
---		name = nil,				--globally unique, only change if you need it
---		title = "Title"
---		anchor = "TOPCENTER", 
---		parent = MainFrame,
---		relFrame = MainFrame,
---		relPoint = "TOPCENTER",
---		xOff = 0,
---		yOff = -100,
---		items = {},
---		defaultVal (String): String value for the dropdown to default to (empty otherwise).
---		ttip = "Optional tooltip.",
----     changeFunc = function(dropdown_frame, dropdown_val) ManFrame.dung = dropdown_val; end
---	}
---	ns:createDropdown(opts)
---[[opts:
-		name (string)			GLOBAL Unique name for the dropdown, leave nil if you don't need the name
-		title (string)			String caption for the dropdown
-		anchor (string)			anchor point of this dropdown (TOPLEFT)
-		parent (Frame)			parent frame of the dropdown
-		relFrame (Frame)		position dropdown relative to this frame
-		relPoint (string)		position this dropdown relative to this point (TOPLEFT)
-		xOff (number)			x offset
-		yOff (number)			y Offset
-		items (table)			List to be displayed in the dropdown
-		defaultVal (String)		String value for the dropdown to default to (empty otherwise).
-		ttip (string)			tooltip to show when the dropdown is moused over (optional)
-		changeFunc (Function)	A custom function to be called, after selecting a dropdown option.
-			
-		returns the dropdown
-]]
 local dropdownCount = 0;
 function ns:createDropdown(opts)
 	dropdownCount = dropdownCount + 1;

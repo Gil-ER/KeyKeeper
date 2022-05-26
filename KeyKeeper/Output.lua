@@ -71,27 +71,42 @@ end
 --**************************************************************************
 -- Output frame
 --**************************************************************************
---Create Frame
-ns.Output = CreateFrame("Frame", "kkOutputFrame", UIParent, "BasicFrameTemplate");
-ns.Output:SetPoint("CENTER",UIParent);
---Make dragable
-ns.Output:EnableMouse(true);
-ns.Output:SetMovable(true);
-ns.Output:SetUserPlaced(true); 
-ns.Output:RegisterForDrag("LeftButton");
-ns.Output:SetScript("OnDragStart", function(self) self:StartMoving() end);
-ns.Output:SetScript("OnDragStart", function(self) self:StartMoving() end);
-ns.Output:SetScript("OnDragStop", function(self) self:StopMovingOrSizing(); end);
---Size (width, height)
-ns.Output:SetSize(325, 300);
-ns.Output:SetPoint("TOPLEFT");
+local params = {
+	name = "kkOutputFrame",
+	title = "Key Keeper",
+	anchor = "CENTER", 		--anchor point of this form
+	parent = UIParent,		--parent frame
+	relFrame = UIParent,	--relative control for positioning
+	relPoint = "CENTER",	--relative point for positioning
+	xOff = 0,				--x offset from relative point
+	yOff = 0,				--y offset from relative point
+	width = 325,			--frame width
+	height = 300,			--frame height
+	isMovable = true,		--make the frame movable
+	isSizable = false		--make the frame resizable
+}
+ns.Output = ns:createFrame(params)
 
---Add the title
-ns.Output.Title = ns.Output:CreateFontString(nil, "OVERLAY", "GameFontNormal");
-ns.Output.Title:SetPoint("TOPLEFT",0,-5);
-ns.Output.Title:SetWidth(275);
-ns.Output.Title:SetJustifyH("CENTER");
-ns.Output.Title:SetText( "Key Keeper" );
+-- ns.Output = CreateFrame("Frame", "kkOutputFrame", UIParent, "BasicFrameTemplate");
+-- ns.Output:SetPoint("CENTER",UIParent);
+-- --Make dragable
+-- ns.Output:EnableMouse(true);
+-- ns.Output:SetMovable(true);
+-- ns.Output:SetUserPlaced(true); 
+-- ns.Output:RegisterForDrag("LeftButton");
+-- ns.Output:SetScript("OnDragStart", function(self) self:StartMoving() end);
+-- ns.Output:SetScript("OnDragStart", function(self) self:StartMoving() end);
+-- ns.Output:SetScript("OnDragStop", function(self) self:StopMovingOrSizing(); end);
+-- --Size (width, height)
+-- ns.Output:SetSize(325, 300);
+-- ns.Output:SetPoint("TOPLEFT");
+
+-- --Add the title
+-- ns.Output.Title = ns.Output:CreateFontString(nil, "OVERLAY", "GameFontNormal");
+-- ns.Output.Title:SetPoint("TOPLEFT",0,-5);
+-- ns.Output.Title:SetWidth(275);
+-- ns.Output.Title:SetJustifyH("CENTER");
+-- ns.Output.Title:SetText( "Key Keeper" );
 
 CreateStringTable();
 

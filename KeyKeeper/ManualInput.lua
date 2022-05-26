@@ -105,7 +105,7 @@ params = {
 	pressFunc = (function (self) ns:UpdateKey(ManFrame.char, ManFrame.dung, ManFrame.lvl, date("%Y %m %d %H:%M"), true); ManFrame:Hide(); end);
 }
 ManFrame.OK = ns:createButton( params );
-local params = {
+params = {
 	anchor = "BOTTOMRIGHT",
 	parent = ManFrame,
 	relFrame = ManFrame.OK,
@@ -119,7 +119,7 @@ local params = {
 	pressFunc = (function (self) ManFrame:Hide(); end);
 }
 ManFrame.Cancel = ns:createButton( params );
-params = nil;
+params = nil;		--variables no longer needed
 
 
 ManFrame:Hide();
