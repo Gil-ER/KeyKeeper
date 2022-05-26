@@ -2,49 +2,8 @@
 local _, ns = ...;
 
 local t = {};		--table of FontStrings placed on the frame
-ns.button = {};		--array of buttons created at the bottom of the output frame
+--ns.button = {};		--array of buttons created at the bottom of the output frame
 
-local ButtonFactory = function (text, ttip)
-	--text: caption for the button
-	--creates a new button and places it in an array then sizes and positions it 
-	local bCount = #ns.button + 1;
-	ns.button[bCount] = CreateFrame("Button", "kkButton" .. bCount, ns.Output)
-	local b = ns.button[bCount];
-	if bCount == 1 then
-		b:SetPoint("BOTTOMRIGHT", ns.Output, "BOTTOMRIGHT",-5, 5)
-	else
-		b:SetPoint("BOTTOMRIGHT", ns.button[bCount - 1], "BOTTOMLEFT", 0, 0)
-	end
-	b:SetWidth((ns.Output:GetWidth() - 5 ) / 2);
-	b:SetHeight(25);        
-	b:SetNormalFontObject("GameFontNormal")
-	b:SetText(text);
-	
-	local ntex = b:CreateTexture()
-	ntex:SetTexture("Interface/Buttons/UI-Panel-Button-Up")
-	ntex:SetTexCoord(0, 0.625, 0, 0.6875)
-	ntex:SetAllPoints()	
-	b:SetNormalTexture(ntex)
-	
-	local htex = b:CreateTexture()
-	htex:SetTexture("Interface/Buttons/UI-Panel-Button-Highlight")
-	htex:SetTexCoord(0, 0.625, 0, 0.6875)
-	htex:SetAllPoints()
-	b:SetHighlightTexture(htex)
-	
-	local ptex = b:CreateTexture()
-	ptex:SetTexture("Interface/Buttons/UI-Panel-Button-Down")
-	ptex:SetTexCoord(0, 0.625, 0, 0.6875)
-	ptex:SetAllPoints()
-	b:SetPushedTexture(ptex)
-	
-	b:SetScript("OnEnter", function (self)
-		GameTooltip:SetOwner(self, "ANCHOR_TOP");
-		GameTooltip:AddLine(ttip)
-		GameTooltip:Show();
-	end);
-	b:SetScript("OnLeave", function(self) GameTooltip:Hide(); end);	
-end
 
 --Create strings and position for form info
 local CreateStringTable = function ()
@@ -86,36 +45,38 @@ local params = {
 	isSizable = false		--make the frame resizable
 }
 ns.Output = ns:createFrame(params)
-
--- ns.Output = CreateFrame("Frame", "kkOutputFrame", UIParent, "BasicFrameTemplate");
--- ns.Output:SetPoint("CENTER",UIParent);
--- --Make dragable
--- ns.Output:EnableMouse(true);
--- ns.Output:SetMovable(true);
--- ns.Output:SetUserPlaced(true); 
--- ns.Output:RegisterForDrag("LeftButton");
--- ns.Output:SetScript("OnDragStart", function(self) self:StartMoving() end);
--- ns.Output:SetScript("OnDragStart", function(self) self:StartMoving() end);
--- ns.Output:SetScript("OnDragStop", function(self) self:StopMovingOrSizing(); end);
--- --Size (width, height)
--- ns.Output:SetSize(325, 300);
--- ns.Output:SetPoint("TOPLEFT");
-
--- --Add the title
--- ns.Output.Title = ns.Output:CreateFontString(nil, "OVERLAY", "GameFontNormal");
--- ns.Output.Title:SetPoint("TOPLEFT",0,-5);
--- ns.Output.Title:SetWidth(275);
--- ns.Output.Title:SetJustifyH("CENTER");
--- ns.Output.Title:SetText( "Key Keeper" );
-
 CreateStringTable();
-
 --Add the buttons and handlers
-ButtonFactory("List Keys", "Lists the keys in party chat.");
-ButtonFactory("Update Data", "Sends out your data and collects\nanything updated by other users.\nThis should be folowed up by\nclicking the 'Update Chart'button.\nIt will take a few seconds to finish\nthe update process.");
-ns.button[1]:SetScript("OnClick", function(self) ns:SendKeys(); ns:SendData("refresh"); ns:ChatKeys(); end);
-ns.button[2]:SetScript("OnClick", function(self) ns:SendKeys(); ns:SendData("refresh"); end);
-
+local w = (ns.Output:GetWidth() - 16 ) / 2;
+params = {
+	anchor = "BOTTOMLEFT",
+	parent = ns.Output,
+	relFrame = ns.Output,
+	relPoint = "BOTTOMLEFT",
+	xOff = 8,
+	yOff = 10,
+	width = w,
+	height = 25,
+	caption	= "List Keys",
+	ttip = "Lists the keys in party chat.",
+	pressFunc = function(self) ns:SendKeys(); ns:SendData("refresh"); ns:ChatKeys(); end;
+}
+ns:createButton(params);
+params = {
+	anchor = "BOTTOMRIGHT",
+	parent = ns.Output,
+	relFrame = ns.Output,
+	relPoint = "BOTTOMRIGHT",
+	xOff = -8,
+	yOff = 10,
+	width = w,
+	height = 25,
+	caption	= "Update Data",
+	ttip = "Sends out your data and collects\nanything updated by other users.\nThis should be folowed up by\nclicking the 'Update Chart'button.\nIt will take a few seconds to finish\nthe update process.",
+	pressFunc = function(self) ns:SendKeys(); ns:SendData("refresh"); end;
+}
+ns:createButton(params);
+params = nil;
 ns.Output:Hide();
 
 local function ClearAllText()
