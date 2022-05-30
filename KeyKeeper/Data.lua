@@ -30,7 +30,6 @@ function ns:IsToonKeyValid(toon)
 	return false;
 end;
 
-
 local function IsDateMoreRecent(toon, dt)
 	--Compare date, if nil or older then return true and update
 	--date format YYYY MM DD HH:MM so string compare works
