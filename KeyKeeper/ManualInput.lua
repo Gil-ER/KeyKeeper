@@ -121,7 +121,6 @@ params = {
 ManFrame.Cancel = ns:createButton( params );
 params = nil;		--variables no longer needed
 
-
 ManFrame:Hide();
 function ns:DL ()
 	ManFrame:Show();

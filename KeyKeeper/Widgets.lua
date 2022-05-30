@@ -1,7 +1,6 @@
 --ns namespace variable
 local addon, ns = ...;
 
-
 local dropdownCount = 0;
 function ns:createDropdown(opts)
 	dropdownCount = dropdownCount + 1;
@@ -59,7 +58,6 @@ function ns:createDropdown(opts)
 
     return dropdown
 end
-
 
 local buttonCount = 0;
 function ns:createButton(opts)

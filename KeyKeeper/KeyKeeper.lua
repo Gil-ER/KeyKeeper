@@ -62,7 +62,6 @@ local kkLDB = LibStub("LibDataBroker-1.1"):NewDataObject("key!", {
 	OnClick = function(_, button) KeyKeeperMiniMap(button) end,
 })
 
-
 function kkLDB:OnTooltipShow()
 	self:AddLine("             Key Keeper");
 	self:AddLine(" ");

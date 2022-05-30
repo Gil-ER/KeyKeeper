@@ -4,7 +4,6 @@ local _, ns = ...;
 local t = {};		--table of FontStrings placed on the frame
 --ns.button = {};		--array of buttons created at the bottom of the output frame
 
-
 --Create strings and position for form info
 local CreateStringTable = function ()
 	for i = 1, 15 do
