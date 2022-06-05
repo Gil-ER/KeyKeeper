@@ -149,11 +149,11 @@ function frame:OnEvent(event, ...)
 	end; 
 	
 	if event == "CHAT_MSG_ADDON" then
-		--fires when an addon message is recieved
+		--fires when an addon message is received
 		local Addon, Message, Stream, Source,_,_,_, ChannelName  = ...; 
 		--watching for KeyKeeper
 		if Addon ~= ns.prefix then return;	end;	
-		--Ingore messages from ourself
+		--Ignore messages from ourself
 		local n = strsplit("-", Source);
 		if n ~= ns.player then
 			if Message == "refresh" then

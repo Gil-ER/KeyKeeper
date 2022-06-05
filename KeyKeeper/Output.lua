@@ -2,7 +2,6 @@
 local _, ns = ...;
 
 local t = {};		--table of FontStrings placed on the frame
---ns.button = {};		--array of buttons created at the bottom of the output frame
 
 --Create strings and position for form info
 local CreateStringTable = function ()
@@ -41,7 +40,7 @@ local params = {
 	width = 325,			--frame width
 	height = 300,			--frame height
 	isMovable = true,		--make the frame movable
-	isSizable = false		--make the frame resizable
+	isSizable = false		--make the frame re-sizable
 }
 ns.Output = ns:createFrame(params)
 CreateStringTable();
