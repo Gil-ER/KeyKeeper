@@ -13,6 +13,7 @@ function ns:createDropdown(opts)
     local default_val = opts['defaultVal'] or "";
     local change_func = opts['changeFunc'] or function (dropdown_val) end;
 
+	print("Created dropdown ", opts.name);
     local dropdown = CreateFrame("Frame", opts.name, opts['parent'], 'UIDropDownMenuTemplate');	
 	dropdown:SetPoint(opts.anchor, opts.relFrame, opts.relPoint, opts.xOff, opts.yOff);
     
@@ -64,7 +65,8 @@ function ns:createButton(opts)
 	buttonCount = buttonCount + 1;
 	if opts.name == nil or opts.name == "" then
 		opts.name = addon .. "GeneratedButtonNumber" .. buttonCount;
-	end;	
+	end;
+	print("Created button ", opts.name);
 	local b = CreateFrame("Button",  opts.name, opts.parent, "GameMenuButtonTemplate");
 	b:SetSize(opts.width, opts.height);
 	b:SetText(opts.caption);
@@ -94,6 +96,7 @@ function ns:createFrame(opts)
 	if opts.name == nil or opts.name == "" then
 		opts.name = addon .. "GeneratedFrameNumber" .. frameCount;
 	end;
+	print("Created frame ", opts.name);
 	local f = CreateFrame("Frame", opts.name, opts.parent, "UIPanelDialogTemplate"); 
 	f:SetWidth(opts.width);
 	f:SetHeight(opts.height);

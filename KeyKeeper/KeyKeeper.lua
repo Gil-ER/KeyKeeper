@@ -115,6 +115,7 @@ function frame:OnEvent(event, ...)
 		if id ~= nil then
 			local lvl = format("%s", C_MythicPlus.GetOwnedKeystoneLevel());
 			if ((ns.keyID ~= id) or (ns.level ~= lvl)) then 
+				if ns.debug then print("Old Key ", ns.keyID, ns.level, " - New Key ", id, lvl); end;
 				ns.keyID = id;
 				ns.key = C_ChallengeMode.GetMapUIInfo(ns.keyID);
 				ns.level = lvl;
