@@ -120,6 +120,7 @@ function frame:OnEvent(event, ...)
 				ns.key = C_ChallengeMode.GetMapUIInfo(ns.keyID);
 				ns.level = lvl;
 				--update the table and send data out (true flag)
+				if ns.debug then print("Updating Keystone."); end;
 				ns:UpdateKey(ns.player, ns.key, ns.level, date("%Y %m %d %H:%M"), true);
 			end;
 		end;
