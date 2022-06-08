@@ -114,7 +114,7 @@ function frame:OnEvent(event, ...)
 		local id = C_MythicPlus.GetOwnedKeystoneChallengeMapID();
 		if id ~= nil then
 			local lvl = format("%s", C_MythicPlus.GetOwnedKeystoneLevel());
-			if ns.debug then print("BAG_UPDATE: lvl = ",lvl, " id = ", id ); end;
+			if ns.debug and IsInInstance() then print("BAG_UPDATE: lvl = ",lvl, " id = ", id ); end;
 			if ((ns.keyID ~= id) or (ns.level ~= lvl)) then 
 				if ns.debug then print("Old Key ", ns.keyID, ns.level, " - New Key ", id, lvl); end;
 				ns.keyID = id;
