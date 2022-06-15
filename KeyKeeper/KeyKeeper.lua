@@ -67,16 +67,17 @@ function kkLDB:OnTooltipShow()
 	self:AddLine(" ");
 	self:AddLine("     Left Click - Show Keys.     ");	
 	self:AddLine("     <SHIFT> Left Click - Add Key     ");	
-	self:AddLine("     <CTRL> Left Click - Center Window ");	
+	self:AddLine("     <CTRL> Left Click - Center Window     ");	
 	self:AddLine("     ");	
 	self:AddLine("     Middle Click - Kaandew...     ");
 	self:AddLine("     Right Click - Update Data.     ");
+	self:AddLine(" ");
 end
 function kkLDB:OnEnter()
 	GameTooltip:SetOwner(self, "ANCHOR_NONE");
 	GameTooltip:SetPoint("TOPLEFT", self, "BOTTOMLEFT");
 	GameTooltip:ClearLines();
-	kkLDB.OnTooltipShow(GameTooltip);
+	kkLDB:OnTooltipShow(GameTooltip);
 	GameTooltip:Show();
 end
 function kkLDB:OnLeave()
