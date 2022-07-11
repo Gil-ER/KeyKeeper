@@ -47,10 +47,10 @@ function ns:createDropdown(opts)
             info.menuList= key
             info.hasArrow = false
             info.func = function(b)
-                UIDropDownMenu_SetSelectedValue(dropdown, b.value, b.value)
+                UIDropDownMenu_SetSelectedValue(dropdown, b.value)--, b.value)
                 UIDropDownMenu_SetText(dropdown, b.value)
                 b.checked = true
-                change_func(dropdown, b.value)
+                change_func(b.value)
             end
             UIDropDownMenu_AddButton(info)
         end

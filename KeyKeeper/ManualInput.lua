@@ -41,7 +41,7 @@ local ManFrame = ns:createFrame(params)
 ManFrame.dung = Dungeons[1];
 ManFrame.lvl = "14";
 ManFrame.char = "Tem";
-
+--[[
 -- Creates a Dropdown (Example)
 params = {	--Dungeons
 	title = "Dungeon",
@@ -54,7 +54,7 @@ params = {	--Dungeons
 	items = Dungeons,
 	defaultVal = ManFrame.dung,
 	caption	= "Save",
-    changeFunc = function(dropdown_frame, dropdown_val) ManFrame.dung = dropdown_val; end
+    changeFunc = function(dropdown_val) ManFrame.dung = dropdown_val; end
 }
 ManFrame.DungDD = ns:createDropdown(params);
 
@@ -68,7 +68,7 @@ params = {	--Level
 	yOff = -50,
 	items = {"2         ","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20"},
 	defaultVal = ManFrame.lvl,
-    changeFunc = function(dropdown_frame, dropdown_val) ManFrame.lvl = dropdown_val; end
+    changeFunc = function(dropdown_val) ManFrame.lvl = dropdown_val; end
 }
 ManFrame.LvlDD = ns:createDropdown(params);
 
@@ -105,6 +105,7 @@ params = {
 	pressFunc = (function (self) ns:UpdateKey(ManFrame.char, ManFrame.dung, ManFrame.lvl, date("%Y %m %d %H:%M"), true); ManFrame:Hide(); end);
 }
 ManFrame.OK = ns:createButton( params );
+
 params = {
 	anchor = "BOTTOMRIGHT",
 	parent = ManFrame,
@@ -119,11 +120,19 @@ params = {
 	pressFunc = (function (self) ManFrame:Hide(); end);
 }
 ManFrame.Cancel = ns:createButton( params );
+]]
 params = nil;		--variables no longer needed
 
 ManFrame:Hide();
-function ns:DL ()
-	ManFrame:Show();
+
+function ns:ManInput()
+	if ManFrame:IsVisible() then 
+		print("Hide")
+		ManFrame:Hide() 
+	else 
+		print("Show")
+		ManFrame:Show(); 
+	end;
 end;
 
 

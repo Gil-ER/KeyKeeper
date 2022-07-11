@@ -20,7 +20,7 @@ SLASH_KEYKEEPER2 = "/keykeeper";
 SlashCmdList.KEYKEEPER = function(arg)
 	arg = arg:lower();
 	if arg == "input" then
-		ns:DL ();
+		ns:ManInput ();
 		return;
 	end;
 	if arg == "reset" then 
@@ -37,11 +37,12 @@ SlashCmdList.KEYKEEPER = function(arg)
 	end;
 end;
 
+
 --Mini map button stuff
 local function KeyKeeperMiniMap(button)
 	if button == "LeftButton" then
 		if IsShiftKeyDown() then
-			ns:DL ();
+			ns:ManInput();
 		elseif IsControlKeyDown() then
 			--resets window position
 			ns.Output:ClearAllPoints();
