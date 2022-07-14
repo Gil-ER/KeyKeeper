@@ -41,7 +41,7 @@ local ManFrame = ns:createFrame(params)
 ManFrame.dung = Dungeons[1];
 ManFrame.lvl = "14";
 ManFrame.char = "Tem";
---[[
+
 -- Creates a Dropdown (Example)
 params = {	--Dungeons
 	title = "Dungeon",
@@ -53,8 +53,8 @@ params = {	--Dungeons
 	yOff = -50,
 	items = Dungeons,
 	defaultVal = ManFrame.dung,
-	caption	= "Save",
-    changeFunc = function(dropdown_val) ManFrame.dung = dropdown_val; end
+	caption	= "Save"
+    --changeFunc = function(dropdown_val) ManFrame.dung = dropdown_val; end
 }
 ManFrame.DungDD = ns:createDropdown(params);
 
@@ -67,8 +67,8 @@ params = {	--Level
 	xOff = 0,
 	yOff = -50,
 	items = {"2         ","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20"},
-	defaultVal = ManFrame.lvl,
-    changeFunc = function(dropdown_val) ManFrame.lvl = dropdown_val; end
+	defaultVal = ManFrame.lvl
+    --changeFunc = function(dropdown_val) ManFrame.lvl = dropdown_val; end
 }
 ManFrame.LvlDD = ns:createDropdown(params);
 
@@ -81,8 +81,8 @@ params = {	--Toons
 	xOff = 0,
 	yOff = -50,
 	items = Toons,
-	defaultVal ="Tem",
-    changeFunc = function(dropdown_frame, dropdown_val) ManFrame.char = dropdown_val; end
+	defaultVal ="Tem"
+    --changeFunc = function(dropdown_frame, dropdown_val) ManFrame.char = dropdown_val; end
 }
 ManFrame.ToonDD = ns:createDropdown(params);
 ManFrame:SetWidth(ManFrame.DungDD:GetWidth() + 40);
@@ -120,7 +120,7 @@ params = {
 	pressFunc = (function (self) ManFrame:Hide(); end);
 }
 ManFrame.Cancel = ns:createButton( params );
-]]
+
 params = nil;		--variables no longer needed
 
 ManFrame:Hide();
