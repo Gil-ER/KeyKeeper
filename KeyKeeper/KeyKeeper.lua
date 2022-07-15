@@ -42,7 +42,7 @@ end;
 local function KeyKeeperMiniMap(button)
 	if button == "LeftButton" then
 		if IsShiftKeyDown() then
-			ns:ManInput();
+			-- ns:ManInput();
 		elseif IsControlKeyDown() then
 			--resets window position
 			ns.Output:ClearAllPoints();
@@ -67,7 +67,6 @@ function kkLDB:OnTooltipShow()
 	self:AddLine("             Key Keeper");
 	self:AddLine(" ");
 	self:AddLine("     Left Click - Show Keys.     ");	
-	self:AddLine("     <SHIFT> Left Click - Add Key     ");	
 	self:AddLine("     <CTRL> Left Click - Center Window     ");	
 	self:AddLine("     ");	
 	self:AddLine("     Middle Click - Kaandew...     ");
