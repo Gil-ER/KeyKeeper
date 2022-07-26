@@ -110,7 +110,7 @@ function frame:OnEvent(event, ...)
 		frame:UnregisterEvent("ZONE_CHANGED");
 	end;
 	
-	if event == "BAG_UPDATE"then
+	if event == "BAG_UPDATE" then
 		--check key, if different update local data
 		local id = C_MythicPlus.GetOwnedKeystoneChallengeMapID();
 		if id ~= nil then
