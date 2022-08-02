@@ -124,7 +124,7 @@ function frame:OnEvent(event, ...)
 				--update the table and send data out (true flag)
 				if ns.debug then print("Updating Keystone."); end;
 				ns:UpdateKey(ns.player, ns.key, ns.level, date("%Y %m %d %H:%M"), true);
-				local msg = "New keystone, ", ns.key, " level ", ns.level;
+				local msg = "New keystone, " .. ns.level .. " - " .. ns.key;
 				if UnitInParty("player") then
 					--SendChatMessage(msg ,"PARTY");
 					print(msg, "   - To Party Chat");
