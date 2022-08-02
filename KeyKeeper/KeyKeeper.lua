@@ -126,7 +126,8 @@ function frame:OnEvent(event, ...)
 				ns:UpdateKey(ns.player, ns.key, ns.level, date("%Y %m %d %H:%M"), true);
 				local msg = "New keystone, ", ns.key, " level ", ns.level;
 				if UnitInParty("player") then
-					SendChatMessage(msg ,"PARTY");
+					--SendChatMessage(msg ,"PARTY");
+					print(msg, "   - To Party Chat");
 				else
 					print(msg);
 				end;
