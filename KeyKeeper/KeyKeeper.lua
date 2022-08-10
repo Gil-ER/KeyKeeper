@@ -118,19 +118,19 @@ function frame:OnEvent(event, ...)
 			if ns.debug and IsInInstance() then print("BAG_UPDATE: lvl = ",lvl, " id = ", id ); end;
 			if ((ns.keyID ~= id) or (ns.level ~= lvl)) then 
 				if ns.debug then print("Old Key ", ns.keyID, ns.level, " - New Key ", id, lvl); end;
-				ns.keyID = id;
-				ns.key = C_ChallengeMode.GetMapUIInfo(ns.keyID);
-				ns.level = lvl;
-				--update the table and send data out (true flag)
-				if ns.debug then print("Updating Keystone."); end;
-				ns:UpdateKey(ns.player, ns.key, ns.level, date("%Y %m %d %H:%M"), true);
-				local msg = "New keystone, " .. ns.level .. " - " .. ns.key;
+				local msg = "New keystone, " .. lvl .. " - " .. C_ChallengeMode.GetMapUIInfo(id);
 				if UnitInParty("player") then
 					--SendChatMessage(msg ,"PARTY");
 					print(msg, "   - To Party Chat");
 				else
 					print(msg);
 				end;
+				ns.keyID = id;
+				ns.key = C_ChallengeMode.GetMapUIInfo(ns.keyID);
+				ns.level = lvl;
+				--update the table and send data out (true flag)
+				if ns.debug then print("Updating Keystone."); end;
+				ns:UpdateKey(ns.player, ns.key, ns.level, date("%Y %m %d %H:%M"), true);
 			end;
 		end;
 	end;
