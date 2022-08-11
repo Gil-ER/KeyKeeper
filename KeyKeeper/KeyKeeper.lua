@@ -116,7 +116,7 @@ function frame:OnEvent(event, ...)
 		if id ~= nil then
 			local lvl = format("%s", C_MythicPlus.GetOwnedKeystoneLevel());
 			if ns.debug and IsInInstance() then print("BAG_UPDATE: lvl = ",lvl, " id = ", id ); end;
-			if ((ns.keyID ~= id) or (ns.level ~= lvl)) then 
+			if ((tonumber(ns.keyID) ~= id) or (tonumber(ns.level) ~= lvl)) then 
 				if ns.debug then print("Old Key ", ns.keyID, ns.level, " - New Key ", id, lvl); end;
 				local msg = "New keystone, " .. lvl .. " - " .. C_ChallengeMode.GetMapUIInfo(id);
 				if UnitInParty("player") then
