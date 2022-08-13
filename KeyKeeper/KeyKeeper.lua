@@ -88,7 +88,7 @@ end
 --event frame
 local frame = CreateFrame("FRAME");
 frame:RegisterEvent("ZONE_CHANGED");
-frame:RegisterEvent("BAG_UPDATE");
+frame:RegisterEvent("ENCOUNTER_LOOT_RECEIVED");
 frame:RegisterEvent("PLAYER_ENTERING_WORLD");
 frame:RegisterEvent("CHAT_MSG_ADDON");
 
@@ -110,12 +110,15 @@ function frame:OnEvent(event, ...)
 		frame:UnregisterEvent("ZONE_CHANGED");
 	end;
 	
-	if event == "BAG_UPDATE" then
+	if event == "ENCOUNTER_LOOT_RECEIVED" then
 		--check key, if different update local data
+		local encounterID, itemID, itemLink, quantity, playerName, className = ...;
+		
 		local id = C_MythicPlus.GetOwnedKeystoneChallengeMapID();
 		if id ~= nil then
+			print(itemLink)
 			local lvl = format("%s", C_MythicPlus.GetOwnedKeystoneLevel());
-			if ns.debug and IsInInstance() then print("BAG_UPDATE: lvl = ",lvl, " id = ", id ); end;
+			if ns.debug and IsInInstance() then print("ENCOUNTER_LOOT_RECEIVED: lvl = ",lvl, " id = ", id ); end;
 			if ((tonumber(ns.keyID) ~= id) or (tonumber(ns.level) ~= lvl)) then 
 				if ns.debug then print("Old Key ", ns.keyID, ns.level, " - New Key ", id, lvl); end;
 				local msg = "New keystone, " .. lvl .. " - " .. C_ChallengeMode.GetMapUIInfo(id);
