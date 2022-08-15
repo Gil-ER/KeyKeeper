@@ -88,7 +88,7 @@ end
 --event frame
 local frame = CreateFrame("FRAME");
 frame:RegisterEvent("ZONE_CHANGED");
-frame:RegisterEvent("ENCOUNTER_LOOT_RECEIVED");
+frame:RegisterEvent("BAG_UPDATE");
 frame:RegisterEvent("PLAYER_ENTERING_WORLD");
 frame:RegisterEvent("CHAT_MSG_ADDON");
 
@@ -110,30 +110,27 @@ function frame:OnEvent(event, ...)
 		frame:UnregisterEvent("ZONE_CHANGED");
 	end;
 	
-	if event == "ENCOUNTER_LOOT_RECEIVED" then
+	if event == "BAG_UPDATE" then
 		--check key, if different update local data
-		local encounterID, itemID, itemLink, quantity, playerName, className = ...;
-		
 		local id = C_MythicPlus.GetOwnedKeystoneChallengeMapID();
 		if id ~= nil then
-			print(itemLink)
 			local lvl = format("%s", C_MythicPlus.GetOwnedKeystoneLevel());
-			if ns.debug and IsInInstance() then print("ENCOUNTER_LOOT_RECEIVED: lvl = ",lvl, " id = ", id ); end;
-			if ((tonumber(ns.keyID) ~= id) or (tonumber(ns.level) ~= lvl)) then 
+			if ns.debug and IsInInstance() then print("BAG_UPDATE: lvl = ",lvl, " id = ", id ); end;
+			if ((ns.keyID ~= id) or (ns.level ~= lvl)) then 
 				if ns.debug then print("Old Key ", ns.keyID, ns.level, " - New Key ", id, lvl); end;
-				local msg = "New keystone, " .. lvl .. " - " .. C_ChallengeMode.GetMapUIInfo(id);
-				if UnitInParty("player") then
-					--SendChatMessage(msg ,"PARTY");
-					print(msg, "   - To Party Chat");
-				else
-					print(msg);
-				end;
 				ns.keyID = id;
 				ns.key = C_ChallengeMode.GetMapUIInfo(ns.keyID);
 				ns.level = lvl;
 				--update the table and send data out (true flag)
 				if ns.debug then print("Updating Keystone."); end;
 				ns:UpdateKey(ns.player, ns.key, ns.level, date("%Y %m %d %H:%M"), true);
+				local msg = "New keystone, " .. ns.level .. " - " .. ns.key;
+				if UnitInParty("player") then
+					--SendChatMessage(msg ,"PARTY");
+					print(msg, "   - To Party Chat");
+				else
+					print(msg);
+				end;
 			end;
 		end;
 	end;
