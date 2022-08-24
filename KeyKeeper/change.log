@@ -1,4 +1,8 @@
-
+1.1.2
+  -Removed ManualInput.lua
+  -Added chat monitoring to add linked keystones
+  -Updateed for 9.3.7
 
 1.1.1
-Added ManualInput 
+  -Added ManualInput.lua to allow players to be added manually
+  -Updated for 9.2.5
