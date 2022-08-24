@@ -1,7 +1,7 @@
-## Interface: 90205
-## Title: Key Keeper v1.1.1
+## Interface: 90207
+## Title: Key Keeper v1.1.2
 ## Notes: Recording and sharing of our groups M+ keystones.
-## Version: 1.1.1
+## Version: 1.1.2
 ## Author: Gil
 ## SavedVariables: KeyKeeper, KeyKeeperLDBIconDB
 
