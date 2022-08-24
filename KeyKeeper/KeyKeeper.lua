@@ -91,10 +91,25 @@ frame:RegisterEvent("ZONE_CHANGED");
 frame:RegisterEvent("BAG_UPDATE");
 frame:RegisterEvent("PLAYER_ENTERING_WORLD");
 frame:RegisterEvent("CHAT_MSG_ADDON");
+frame:RegisterEvent("CHAT_MSG_CHANNEL");
 
 local refreshFlag = true;
 
 function frame:OnEvent(event, ...)
+	if event == "CHAT_MSG_CHANNEL" then
+		local msg, player, _,_,_,_,_,_, channelName = ...; 
+		if channelName:lower() == "turtleoverlords" and strfind(msg, "Keystone:") and player == "Tem-EarthenRing" then
+			local p = strsplit("-", player)
+			local _,_,_,d = strsplit("|", msg);
+			local k, l = strsplit ("(",d)
+			_,k = strsplit(":",k,2);
+			k = strtrim(k, " ");
+			l = strtrim(strsplit(")",l)," ");
+			print(p, l, k);
+			ns:UpdateKey("Tem", k, l, date("%Y %m %d %H:%M"), true);
+		end;
+	end;
+
 	if event == "ZONE_CHANGED" then
 		--Runs once to initialize data after loading is done
 		ns.keyID = C_MythicPlus.GetOwnedKeystoneChallengeMapID();
