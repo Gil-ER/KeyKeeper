@@ -100,14 +100,13 @@ function frame:OnEvent(event, ...)
 		local msg, player, _,_,_,_,_,_, channelName = ...; 
 		if channelName:lower() == "turtleoverlords" or channelName:lower() == "party" then
 			if strfind(msg, "Keystone:") and player == "Tem-EarthenRing" then
-				local p = "Tem"
 				local _,_,_,d = strsplit("|", msg);		--Keystone: Dungeon (15)
 				local k, l = strsplit ("(",d)			--k = Keystone: Dungeon and l = 15)
 				_,k = strsplit(":",k,2);				--k = ' DUNGEON '
 				k = strtrim(k, " ");					--Trim the spaces
 				l = strtrim(strsplit(")",l)," ");		--drop the ')' 
 				--Send out the keystone
-				ns:UpdateKey(p, k, l, date("%Y %m %d %H:%M"), true);
+				ns:UpdateKey("Tem", k, l, date("%Y %m %d %H:%M"), true);
 			end;
 		end;
 	end;
