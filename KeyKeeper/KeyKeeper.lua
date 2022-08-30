@@ -100,8 +100,7 @@ function frame:OnEvent(event, ...)
 		local msg, player, _,_,_,_,_,_, channelName = ...; 
 		if channelName:lower() == "turtleoverlords" or channelName:lower() == "party" then
 			if strfind(msg, "Keystone:") and player == "Tem-EarthenRing" then
-				local p = strsplit("-", player);		--left of '-' so Tem
-				p = strtrim(" ", p);
+				local p = "Tem"
 				local _,_,_,d = strsplit("|", msg);		--Keystone: Dungeon (15)
 				local k, l = strsplit ("(",d)			--k = Keystone: Dungeon and l = 15)
 				_,k = strsplit(":",k,2);				--k = ' DUNGEON '
