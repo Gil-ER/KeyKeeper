@@ -37,12 +37,13 @@ local params = {
 	relPoint = "CENTER",	--relative point for positioning
 	xOff = 0,				--x offset from relative point
 	yOff = 0,				--y offset from relative point
-	width = 325,			--frame width
+	width = 400,			--frame width
 	height = 300,			--frame height
 	isMovable = true,		--make the frame movable
 	isSizable = false		--make the frame re-sizable
 }
 ns.Output = ns:createFrame(params)
+tinsert(UISpecialFrames, "kkOutputFrame");
 CreateStringTable();
 --Add the buttons and handlers
 local w = (ns.Output:GetWidth() - 16 ) / 2;
