@@ -92,12 +92,15 @@ frame:RegisterEvent("BAG_UPDATE");
 frame:RegisterEvent("PLAYER_ENTERING_WORLD");
 frame:RegisterEvent("CHAT_MSG_ADDON");
 frame:RegisterEvent("CHAT_MSG_CHANNEL");
+frame:RegisterEvent("CHAT_MSG_GUILD");
+frame:RegisterEvent("CHAT_MSG_OFFICER");
 frame:RegisterEvent("CHAT_MSG_PARTY");
+frame:RegisterEvent("CHAT_MSG_WHISPER");
 
 local refreshFlag = true;
 
 function frame:OnEvent(event, ...)
-	if event == "CHAT_MSG_PARTY" then
+	if event == "CHAT_MSG_GUILD" or event == "CHAT_MSG_OFFICER" or event == "CHAT_MSG_PARTY" or event == "CHAT_MSG_WHISPER" then
 		local msg, player = ...; 
 		if strfind(msg, "Keystone:") and player == "Tem-EarthenRing" then
 			local _,_,_,d = strsplit("|", msg);		--Keystone: Dungeon (15)
