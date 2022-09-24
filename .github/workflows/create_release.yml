@@ -1,4 +1,4 @@
-name: Release to draft
+name: Create release
 
 on:
   workflow_dispatch:
@@ -44,5 +44,5 @@ jobs:
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ./KeyKeeper.zip
-          asset_name: KeyKeeper.zip
+          asset_name: KeyKeeper-v${{ github.event.inputs.tag }}.zip.zip
           asset_content_type: application/zip
