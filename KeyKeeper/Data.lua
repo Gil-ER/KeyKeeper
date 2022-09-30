@@ -11,11 +11,11 @@ _, ns.ver = strsplit("v", title);
 
 local function IsToonInTable(toon)
 	--if the toon isn't in the DB add a blank record
-	if KeyKeeper == nil then KeyKeeper = {}; end;
-	if KeyKeeper["Toons"] == nil then KeyKeeper["Toons"] = {}; end;
-	if KeyKeeper["Toons"][toon] == nil then KeyKeeper["Toons"][toon] = {}; end;
+	KeyKeeper = KeyKeeper or {};
+	KeyKeeper.Toons = KeyKeeper.Toons or {};
+	KeyKeeper.Toons[toon] = KeyKeeper.Toons[toon] or {}
 	--should be here by now but text and return true
-	if KeyKeeper["Toons"][toon] ~= nil then return true; end;
+	if KeyKeeper.Toons[toon] ~= nil then return true; end;
 	--shouldn't get here...
 	return false;
 end;
@@ -23,8 +23,8 @@ end;
 function ns:IsToonKeyValid(toon)
 	--returns true if toon key is valid, otherwise false
 	if KeyKeeper ~= nil then
-		if KeyKeeper["Toons"] ~= nil then
-			if KeyKeeper["Toons"][toon] ~= nil then return true; end;
+		if KeyKeeper.Toons ~= nil then
+			if KeyKeeper.Toons[toon] ~= nil then return true; end;
 		end;
 	end;
 	return false;
@@ -33,8 +33,8 @@ end;
 local function IsDateMoreRecent(toon, dt)
 	--Compare date, if nil or older then return true and update
 	--date format YYYY MM DD HH:MM so string compare works
-	if (KeyKeeper["Toons"][toon]["Date"] == nil) or (KeyKeeper["Toons"][toon]["Date"] < dt) then return true; end;
-	return false;
+	if (KeyKeeper.Toons[toon]["Date"] == nil) or (KeyKeeper.Toons[toon]["Date"] < dt) then return true;
+		else return false; end;
 end;
 
 local function IsKeyDifferent(toon, key, level)
