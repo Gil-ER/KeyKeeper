@@ -39,10 +39,10 @@ end;
 
 local function IsKeyDifferent(toon, key, level)
 	--if nil its not in the DB so return true and add
-	if (KeyKeeper["Toons"][toon] == nil) then return true; end;
-	if (KeyKeeper["Toons"][toon]["Key"] == nil) or (KeyKeeper["Toons"][toon]["Level"] == nil) then return true; end;
+	if (KeyKeeper.Toons[toon] == nil) then return true; end;
+	if (KeyKeeper.Toons[toon]["Key"] == nil) or (KeyKeeper.Toons[toon]["Level"] == nil) then return true; end;
 	--We have data so compare
-	if (KeyKeeper["Toons"][toon]["Key"] ~= key) or (KeyKeeper["Toons"][toon]["Level"] ~= level) then return true; end;
+	if (KeyKeeper.Toons[toon]["Key"] ~= key) or (KeyKeeper.Toons[toon]["Level"] ~= level) then return true; end;
 	--same key
 	return false;
 end;
@@ -63,14 +63,14 @@ end;
 		--If this toon wasn't there it should be added by now
 		if KeyKeeper["Toons"][toon] == nil then	--2
 			--if no key is saved then add this one.
-			KeyKeeper["Toons"][toon] = {["Key"] = key, ["Level"] = level, ["Date"] = dt}; 
+			KeyKeeper.Toons[toon] = {["Key"] = key, ["Level"] = level, ["Date"] = dt}; 
 			if ns.debug then print("Adding a new key for ", toon); end;
 		else
 			--toon is there, is there a keystone
-			if KeyKeeper["Toons"][toon]["Key"] == nil then	--3
+			if KeyKeeper.Toons[toon]["Key"] == nil then	--3
 				--no key so add this one
 				if ns.debug then print("Adding a new key for ", toon); end;
-				KeyKeeper["Toons"][toon] = {["Key"] = key, ["Level"] = level, ["Date"] = dt};
+				KeyKeeper.Toons[toon] = {["Key"] = key, ["Level"] = level, ["Date"] = dt};
 			else
 				--there is a key, is it different
 				if IsKeyDifferent(toon, key, level) then	--4
@@ -78,7 +78,7 @@ end;
 					if IsDateMoreRecent(toon, dt) then	--5
 						--Update the DB with newer data
 						if ns.debug then print("Updating ", toon, "'s key."); end;
-						KeyKeeper["Toons"][toon] = {["Key"] = key, ["Level"] = level, ["Date"] = dt};
+						KeyKeeper.Toons[toon] = {["Key"] = key, ["Level"] = level, ["Date"] = dt};
 					else
 						--we have newer data so send it out even if flag was false
 						if ns.debug then print("Sending our key for.", toon); end;
@@ -102,9 +102,9 @@ end;	--UpdateKey
  
  function ns:SendOneKey(toon)
 	--Send one toons data
-	local key = KeyKeeper["Toons"][toon]["Key"];
-	local level = KeyKeeper["Toons"][toon]["Level"];
-	local dt = KeyKeeper["Toons"][toon]["Date"];
+	local key = KeyKeeper.Toons[toon]["Key"];
+	local level = KeyKeeper.Toons[toon]["Level"];
+	local dt = KeyKeeper.Toons[toon]["Date"];
 	if key ~= nil or level ~= nil or dt ~= nil then
 		local msg = toon .. "#" .. key .. "#" .. level .. "#" .. dt .. "#" .. ns.ver;
 		ns:SendData(msg);
@@ -114,14 +114,14 @@ end;	--UpdateKey
  function ns:SendKeys()	
 	--Send out data for all toons in database
 	if KeyKeeper == nil then return; end;
-	if KeyKeeper["Toons"] == nil then return; end;
+	if KeyKeeper.Toons == nil then return; end;
 	local msg = "";	
 	local cID = GetChannelName(ns.channel);
 	if cID > 0 then
-		for index,value in pairs(KeyKeeper["Toons"]) do 
-			local key = KeyKeeper["Toons"][index]["Key"];
-			local level = KeyKeeper["Toons"][index]["Level"];
-			local dt = KeyKeeper["Toons"][index]["Date"];
+		for index,value in pairs(KeyKeeper.Toons) do 
+			local key = KeyKeeper.Toons[index]["Key"];
+			local level = KeyKeeper.Toons[index]["Level"];
+			local dt = KeyKeeper.Toons[index]["Date"];
 			--Don't sent if invalid
 			if (key ~= nil) and (level ~= nil) and (dt ~= nil) then
 				msg = index .. "#" .. key .. "#" .. level .. "#" .. dt .. "#" .. ns.ver;
@@ -136,9 +136,9 @@ end;	--UpdateKey
 	--Gets the currently saved reset time from the table
 	--if the value isn't in the table 0 is returned
 	if KeyKeeper ~= nil then
-		if KeyKeeper["settings"] ~= nil then
-			if KeyKeeper["settings"]["reset"] ~= nil then 
-				return KeyKeeper["settings"]["reset"]; 
+		if KeyKeeper.settings ~= nil then
+			if KeyKeeper.settings.reset ~= nil then 
+				return KeyKeeper.settings.reset; 
 			end;
 		end;
 	end;
@@ -186,9 +186,9 @@ function ns:SendData(msg)
 end;
 		
 function ns:ChatKeys()
-	for index,value in pairs(KeyKeeper["Toons"]) do 
-		local key = KeyKeeper["Toons"][index]["Key"];
-		local level = KeyKeeper["Toons"][index]["Level"];
+	for index,value in pairs(KeyKeeper.Toons) do 
+		local key = KeyKeeper.Toons[index]["Key"];
+		local level = KeyKeeper.Toons[index]["Level"];
 		--Don't send if invalid
 		if (key ~= nil) and (level ~= nil) then
 			msg = index .. "    " .. level .. "-" .. key;
