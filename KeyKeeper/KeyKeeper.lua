@@ -207,7 +207,6 @@ function frame:OnEvent(event, ...)
 			l = strtrim(strsplit(")",l)," ");		--drop the ')' 
 			--Send out the keystone
 			ns:UpdateKey("Tem", k, l, date("%Y %m %d %H:%M"), true);
-			SendChatMessage("Keystone link received from Tem", "CHANNEL", nil, GetChannelName("TurtleOverlords"));
 		end;
 	end;
 	
@@ -222,7 +221,6 @@ function frame:OnEvent(event, ...)
 				l = strtrim(strsplit(")",l)," ");		--drop the ')' 
 				--Send out the keystone
 				ns:UpdateKey("Tem", k, l, date("%Y %m %d %H:%M"), true);
-				SendChatMessage("Keystone link received from Tem", "CHANNEL", nil, GetChannelName("TurtleOverlords"));
 			end;
 		end;
 	end;
