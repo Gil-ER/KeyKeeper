@@ -184,18 +184,7 @@ function ns:SendData(msg)
 		if ns.debug then print("Refresh error, No channel.", toon); end;
 	end;
 end;
-		
-function ns:ChatKeys()
-	for index,value in pairs(KeyKeeper.Toons) do 
-		local key = KeyKeeper.Toons[index]["Key"];
-		local level = KeyKeeper.Toons[index]["Level"];
-		--Don't send if invalid
-		if (key ~= nil) and (level ~= nil) then
-			msg = index .. "    " .. level .. "-" .. key;
-			SendChatMessage( msg ,"PARTY" );
-		end;
-	end;
-end;
+
 
 
 
