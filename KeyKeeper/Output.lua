@@ -58,7 +58,7 @@ params = {
 	height = 25,
 	caption	= "List Keys",
 	ttip = "Lists the keys in party chat.",
-	pressFunc = function(self) ns:SendKeys(); ns:SendData("refresh"); ns:ChatKeys(); end;
+	pressFunc = function(self) ns:SendKeys(); ns:SendData("refresh"); end;
 }
 ns:createButton(params);
 params = {
