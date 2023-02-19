@@ -42,7 +42,8 @@ local params = {
 	isMovable = true,		--make the frame movable
 	isSizable = false		--make the frame re-sizable
 }
-ns.Output = ns:createFrame(params)
+ns.Output = ns:createFrame(params);
+ns.Output:SetFrameStrata("DIALOG");
 tinsert(UISpecialFrames, "kkOutputFrame");
 CreateStringTable();
 --Add the buttons and handlers
