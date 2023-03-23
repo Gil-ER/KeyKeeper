@@ -190,7 +190,7 @@ function ns:ChatKeys()
 		local key = KeyKeeper.Toons[index]["Key"];
 		local level = KeyKeeper.Toons[index]["Level"];
 		--Don't send if invalid
-		if (key ~= nil) and (level ~= nil) and (IsInRaid() == false) then
+		if (key ~= nil) and (level ~= nil) then
 			msg = index .. "    " .. level .. "-" .. key;
 			SendChatMessage( msg ,"PARTY" );
 		end;
