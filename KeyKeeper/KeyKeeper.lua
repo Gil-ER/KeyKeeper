@@ -94,7 +94,7 @@ frame:RegisterEvent("CHALLENGE_MODE_MEMBER_INFO_UPDATED");
 frame:RegisterEvent("ZONE_CHANGED");
 frame:RegisterEvent("PLAYER_ENTERING_WORLD");
 --Looking form new keys
-frame:RegisterEvent("BAG_UPDATE");
+frame:RegisterEvent("BAG_UPDATE_DELAYED");
 --addon messages
 frame:RegisterEvent("CHAT_MSG_ADDON");
 --For linked keys
@@ -140,19 +140,19 @@ function frame:OnEvent(event, ...)
 		else
 			--Don't monitor events if your not on Earthen Ring
 			frame:UnregisterEvent("ZONE_CHANGED");
-			frame:UnregisterEvent("BAG_UPDATE");
+			frame:UnregisterEvent("BAG_UPDATE_DELAYED");
 			frame:UnregisterEvent("PLAYER_ENTERING_WORLD");
 			frame:UnregisterEvent("CHAT_MSG_ADDON");
 		end;
 	end;
 	
-	if event == "BAG_UPDATE" then
+	if event == "BAG_UPDATE_DELAYED" then
 		--check key, if different update local data
 		local id = C_MythicPlus.GetOwnedKeystoneChallengeMapID();
 		if id ~= nil then
 			local lvl = format("%s", C_MythicPlus.GetOwnedKeystoneLevel());
-			if ns.debug and IsInInstance() then print("BAG_UPDATE: lvl = ",lvl, " id = ", id ); end;
-			if ((ns.keyID ~= id) or (ns.level ~= lvl)) then 
+			if ns.debug and IsInInstance() then print("BAG_UPDATE_DELAYED: lvl = ",lvl, " id = ", id ); end;			
+			if ns:IsKeyDifferent(ns.player,  C_ChallengeMode.GetMapUIInfo(id), lvl) then 
 				if ns.debug then print("Old Key ", ns.keyID, ns.level, " - New Key ", id, lvl); end;
 				ns.keyID = id;
 				ns.key = C_ChallengeMode.GetMapUIInfo(ns.keyID);
@@ -161,7 +161,7 @@ function frame:OnEvent(event, ...)
 				if ns.debug then print("Updating Keystone."); end;
 				ns:UpdateKey(ns.player, ns.key, ns.level, date("%Y %m %d %H:%M"), true);
 				local msg = "New keystone, " .. ns.level .. " - " .. ns.key;
-				if UnitInParty("player") then
+				if (IsInGroup()) and (not IsInRaid()) then
 					SendChatMessage(msg ,"PARTY");
 				else
 					print(msg);

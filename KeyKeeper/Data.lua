@@ -37,13 +37,12 @@ local function IsDateMoreRecent(toon, dt)
 		else return false; end;
 end;
 
-local function IsKeyDifferent(toon, key, level)
+function ns:IsKeyDifferent(toon, key, level)
 	--if nil its not in the DB so return true and add
-	if (KeyKeeper.Toons[toon] == nil) then return true; end;
+	if (KeyKeeper.Toons[toon] == nil) then return true; end;	
 	if (KeyKeeper.Toons[toon]["Key"] == nil) or (KeyKeeper.Toons[toon]["Level"] == nil) then return true; end;
 	--We have data so compare
 	if (KeyKeeper.Toons[toon]["Key"] ~= key) or (KeyKeeper.Toons[toon]["Level"] ~= level) then return true; end;
-	--same key
 	return false;
 end;
  
@@ -73,7 +72,7 @@ end;
 				KeyKeeper.Toons[toon] = {["Key"] = key, ["Level"] = level, ["Date"] = dt};
 			else
 				--there is a key, is it different
-				if IsKeyDifferent(toon, key, level) then	--4
+				if ns:IsKeyDifferent(toon, key, level) then	--4
 					--key is different, find newest one
 					if IsDateMoreRecent(toon, dt) then	--5
 						--Update the DB with newer data
@@ -190,7 +189,7 @@ function ns:ChatKeys()
 		local key = KeyKeeper.Toons[index]["Key"];
 		local level = KeyKeeper.Toons[index]["Level"];
 		--Don't send if invalid
-		if (key ~= nil) and (level ~= nil) and (IsInRaid() == false) then
+		if (key ~= nil) and (level ~= nil) then
 			msg = index .. "    " .. level .. "-" .. key;
 			SendChatMessage( msg ,"PARTY" );
 		end;
