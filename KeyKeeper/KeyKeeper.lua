@@ -116,8 +116,8 @@ function frame:OnEvent(event, ...)
 			--update the table and send data out (true flag)
 			ns:UpdateKey(ns.player, ns.key, ns.level, date("%Y %m %d %H:%M"), true);			
 		end;	
-		ns:SendKeys();
-		ns:SendData("refresh");
+		ns:SendKeys();				--Send out our keys(will be updated here too)
+		ns:SendData("refresh");		--Request refresh(needed if someone has a key that we don't have)		
 		refreshFlag = false;
 		frame:UnregisterEvent("ZONE_CHANGED");
 	end;
@@ -143,6 +143,11 @@ function frame:OnEvent(event, ...)
 			frame:UnregisterEvent("BAG_UPDATE_DELAYED");
 			frame:UnregisterEvent("PLAYER_ENTERING_WORLD");
 			frame:UnregisterEvent("CHAT_MSG_ADDON");
+			frame:UnregisterEvent("CHAT_MSG_CHANNEL");
+			frame:UnregisterEvent("CHAT_MSG_GUILD");
+			frame:UnregisterEvent("CHAT_MSG_OFFICER");
+			frame:UnregisterEvent("CHAT_MSG_PARTY");
+			frame:UnregisterEvent("CHAT_MSG_WHISPER");			
 		end;
 	end;
 	
@@ -150,8 +155,7 @@ function frame:OnEvent(event, ...)
 		--check key, if different update local data
 		local id = C_MythicPlus.GetOwnedKeystoneChallengeMapID();
 		if id ~= nil then
-			local lvl = format("%s", C_MythicPlus.GetOwnedKeystoneLevel());
-			if ns.debug and IsInInstance() then print("BAG_UPDATE_DELAYED: lvl = ",lvl, " id = ", id ); end;			
+			local lvl = format("%s", C_MythicPlus.GetOwnedKeystoneLevel());			
 			if ns:IsKeyDifferent(ns.player,  C_ChallengeMode.GetMapUIInfo(id), lvl) then 
 				if ns.debug then print("Old Key ", ns.keyID, ns.level, " - New Key ", id, lvl); end;
 				ns.keyID = id;

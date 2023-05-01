@@ -85,6 +85,7 @@ end;
 					end;	--5
 				else
 					--key is the same so we are done
+					if ns.debug then print(toon .. "'s key unchanged"); end;
 					return;
 				end;	--4
 			end;	--3
