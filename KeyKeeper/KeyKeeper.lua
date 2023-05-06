@@ -85,6 +85,10 @@ function kkLDB:OnLeave()
 end
 --/ Mini map button stuff
 
+function KeyKeeper_OnAddonCompartmentClick()
+	ns:ShowKeys();
+end;
+
 --event frame
 local frame = CreateFrame("FRAME");
 frame:RegisterEvent("CHALLENGE_MODE_MEMBER_INFO_UPDATED");
@@ -227,11 +231,7 @@ function frame:OnEvent(event, ...)
 				ns:UpdateKey("Tem", k, l, date("%Y %m %d %H:%M"), true);
 			end;
 		end;
-	end;
-
-
-	
+	end;	
 	
 end	
 frame:SetScript("OnEvent", frame.OnEvent); 
-
