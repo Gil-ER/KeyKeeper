@@ -1,4 +1,4 @@
-local _, ns = ...;	
+local _, ns = ...;
 
 ns.debug = false;
 
