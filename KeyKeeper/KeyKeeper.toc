@@ -4,7 +4,6 @@
 ## Version: 1.2.5
 ## Author: Gil
 ## SavedVariables: KeyKeeper, KeyKeeperLDBIconDB
-
 ## AddonCompartmentFunc: KeyKeeper_OnAddonCompartmentClick
 ## IconTexture: Interface\Icons\inv_misc_key_05
 ## X-Website: http://github.com/Gil-ER/KeyKeeper
