@@ -39,11 +39,9 @@ end;
 local function KK_Tooltip(tt)
 	tt:AddLine("             Key Keeper");
 	tt:AddLine(" ");
-	tt:AddLine("     Left Click - Show Keys.     ");	
-	tt:AddLine("     <CTRL> Left Click - Center Window     ");	
-	tt:AddLine("     ");	
-	tt:AddLine("     Middle Click - Kaandew...     ");
+	tt:AddLine("     Left Click - Show Keys.     ");		
 	tt:AddLine("     Right Click - Update Data.     ");
+	tt:AddLine("     <CTRL> Left Click - Center Window     ");
 	tt:AddLine(" ");
 	tt:Show();
 end;
@@ -61,8 +59,6 @@ local function KeyKeeperMiniMap(button)
 		else
 			ns:ShowKeys();
 		end;
-	elseif button == "MiddleButton" then
-		SendChatMessage("KAANDEW..." ,"Yell");
 	elseif button == "RightButton" then
 		ns:SendKeys();
 	end;
