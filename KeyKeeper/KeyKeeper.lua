@@ -1,6 +1,7 @@
-local _, ns = ...;
+local _, ns = ...;	
 
 ns.debug = false;
+ns.Version = "010206"
 
 --sets up arrow key navigation in chat edit box
 for i = 1, NUM_CHAT_WINDOWS do
@@ -8,11 +9,9 @@ for i = 1, NUM_CHAT_WINDOWS do
 end;
 
 --reload shortcut
-if SLASH_RELOADUI1 == nil then	
-	SLASH_RELOADUI1 = "/rl"; 
-	SLASH_RELOADUI2 = "/rload";	
-	SlashCmdList.RELOADUI = ReloadUI();	
-end;
+SLASH_RELOADUI1 = "/rl"; 
+SLASH_RELOADUI2 = "/rload";	
+SlashCmdList.RELOADUI = ReloadUI();	
 
 --key data frame
 SLASH_KEYKEEPER1 = "/kk"; 
@@ -37,16 +36,28 @@ SlashCmdList.KEYKEEPER = function(arg)
 	end;
 end;
 
+local function KK_Tooltip(tt)
+	tt:AddLine("             Key Keeper");
+	tt:AddLine(" ");
+	tt:AddLine("     Left Click - Show Keys.     ");	
+	tt:AddLine("     <CTRL> Left Click - Center Window     ");	
+	tt:AddLine("     ");	
+	tt:AddLine("     Middle Click - Kaandew...     ");
+	tt:AddLine("     Right Click - Update Data.     ");
+	tt:AddLine(" ");
+	tt:Show();
+end;
 
 --Mini map button stuff
 local function KeyKeeperMiniMap(button)
 	if button == "LeftButton" then
 		if IsShiftKeyDown() then
-			-- ns:ManInput();
+			
 		elseif IsControlKeyDown() then
 			--resets window position
 			ns.Output:ClearAllPoints();
 			ns.Output:SetPoint("CENTER",UIParent);
+			ns:ShowKeys();
 		else
 			ns:ShowKeys();
 		end;
@@ -64,29 +75,32 @@ local kkLDB = LibStub("LibDataBroker-1.1"):NewDataObject("key!", {
 })
 
 function kkLDB:OnTooltipShow()
-	self:AddLine("             Key Keeper");
-	self:AddLine(" ");
-	self:AddLine("     Left Click - Show Keys.     ");	
-	self:AddLine("     <CTRL> Left Click - Center Window     ");	
-	self:AddLine("     ");	
-	self:AddLine("     Middle Click - Kaandew...     ");
-	self:AddLine("     Right Click - Update Data.     ");
-	self:AddLine(" ");
+	KK_Tooltip(self)
 end
 function kkLDB:OnEnter()
 	GameTooltip:SetOwner(self, "ANCHOR_NONE");
 	GameTooltip:SetPoint("TOPLEFT", self, "BOTTOMLEFT");
 	GameTooltip:ClearLines();
 	kkLDB:OnTooltipShow(GameTooltip);
-	GameTooltip:Show();
 end
 function kkLDB:OnLeave()
 	GameTooltip:Hide();
 end
 --/ Mini map button stuff
 
-function KeyKeeper_OnAddonCompartmentClick()
+--Global Addon Compartment functions
+function KeyKeeper_OnAddonCompartmentClick(_, button)
+	KeyKeeperMiniMap(button)
+end;
+function KeyKeeper_OnAddonCompartmentEnter()
+	GameTooltip:SetOwner(AddonCompartmentFrame, "ANCHOR_NONE");
+	GameTooltip:SetPoint("TOPLEFT", AddonCompartmentFrame, "TOPRIGHT");
+	KK_Tooltip(GameTooltip);
 	ns:ShowKeys();
+end;
+function KeyKeeper_OnAddonCompartmentLeave()
+	ns.Output:Hide();
+	GameTooltip:Hide();
 end;
 
 --event frame
@@ -195,6 +209,11 @@ function frame:OnEvent(event, ...)
 				--false flag prevents sending out again
 				--parse out variables from message
 				local toon, stone, level, dt, ver = strsplit( "#", Message );
+				--if string didn't include a version then set it to 010205 anyone with this functionality is higher
+				if ver == nil or strfind(ver, ".") ~= nil then ver = "010205"; end;
+				if ns.Version < ver then
+					ns.Info:SetText("New update available"); 
+				end;
 				if ns.debug then print(n, " sent ", Message); end;
 				ns:UpdateKey(toon, stone, level, dt, false);	
 			end;
@@ -235,3 +254,4 @@ function frame:OnEvent(event, ...)
 	
 end	
 frame:SetScript("OnEvent", frame.OnEvent); 
+

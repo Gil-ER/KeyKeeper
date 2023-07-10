@@ -6,8 +6,6 @@ ns.channel = "TurtleOverlords";					--communication channel
 ns.keyID = 0;
 ns.key = "";
 ns.level = 0;
-local _, title = GetAddOnInfo("KeyKeeper");
-_, ns.ver = strsplit("v", title);
 
 local function IsToonInTable(toon)
 	--if the toon isn't in the DB add a blank record
@@ -106,7 +104,7 @@ end;	--UpdateKey
 	local level = KeyKeeper.Toons[toon]["Level"];
 	local dt = KeyKeeper.Toons[toon]["Date"];
 	if key ~= nil or level ~= nil or dt ~= nil then
-		local msg = toon .. "#" .. key .. "#" .. level .. "#" .. dt .. "#" .. ns.ver;
+		local msg = toon .. "#" .. key .. "#" .. level .. "#" .. dt .. "#" .. ns.Version;
 		ns:SendData(msg);
 	end;
  end;
@@ -124,7 +122,7 @@ end;	--UpdateKey
 			local dt = KeyKeeper.Toons[index]["Date"];
 			--Don't sent if invalid
 			if (key ~= nil) and (level ~= nil) and (dt ~= nil) then
-				msg = index .. "#" .. key .. "#" .. level .. "#" .. dt .. "#" .. ns.ver;
+				msg = index .. "#" .. key .. "#" .. level .. "#" .. dt .. "#" .. ns.Version;
 				if ns.debug then print("Sending ", msg); end;
 				local r = C_ChatInfo.SendAddonMessage (ns.prefix, msg, "CHANNEL", cID);
 			end;
