@@ -1,7 +1,7 @@
-## Interface: 100107
-## Title: Key Keeper v1.2.7
+## Interface: 100200
+## Title: Key Keeper v1.2.8
 ## Notes: Recording and sharing of our groups M+ keystones.
-## Version: 1.2.7
+## Version: 1.2.8
 ## Author: Gil
 ## AddonCompartmentFunc: KeyKeeper_OnAddonCompartmentClick
 ## AddonCompartmentFuncOnEnter: KeyKeeper_OnAddonCompartmentEnter
