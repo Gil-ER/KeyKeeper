@@ -1,7 +1,7 @@
 local _, ns = ...;	
 
 ns.debug = false;
-ns.Version = "010206"
+ns.Version = "010209"
 
 --sets up arrow key navigation in chat edit box
 for i = 1, NUM_CHAT_WINDOWS do
