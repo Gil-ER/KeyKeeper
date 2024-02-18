@@ -85,19 +85,22 @@ end
 --/ Mini map button stuff
 
 --Global Addon Compartment functions
-function KeyKeeper_OnAddonCompartmentClick(_, button)
-	KeyKeeperMiniMap(button)
-end;
-function KeyKeeper_OnAddonCompartmentEnter()
-	GameTooltip:SetOwner(AddonCompartmentFrame, "ANCHOR_NONE");
-	GameTooltip:SetPoint("TOPLEFT", AddonCompartmentFrame, "TOPRIGHT");
-	KK_Tooltip(GameTooltip);
-	ns:ShowKeys();
-end;
-function KeyKeeper_OnAddonCompartmentLeave()
-	ns.Output:Hide();
-	GameTooltip:Hide();
-end;
+ AddonCompartmentFrame:RegisterAddon({
+	text = "Key Keeper",
+	icon = "Interface\\Icons\\inv_misc_key_05",
+	notCheckable = true,
+	func = function(arg1)
+		ns:ShowKeys();
+	end,
+	funcOnEnter = function()
+		GameTooltip:SetOwner(AddonCompartmentFrame, "ANCHOR_NONE");
+		GameTooltip:SetPoint("BOTTOMRIGHT", AddonCompartmentFrame, "TOPRIGHT");
+		KK_Tooltip(GameTooltip);
+	end,
+	funcOnLeave = function()
+		GameTooltip:Hide();
+	end,
+ })
 
 --event frame
 local frame = CreateFrame("FRAME");
