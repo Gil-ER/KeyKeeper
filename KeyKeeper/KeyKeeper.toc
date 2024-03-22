@@ -1,7 +1,7 @@
-## Interface: 100205
-## Title: Key Keeper v1.2.9
+## Interface: 100206
+## Title: Key Keeper v1.2.10
 ## Notes: Recording and sharing of our groups M+ keystones.
-## Version: 1.2.9
+## Version: 1.2.10
 ## Author: Gil
 ## IconTexture: Interface\Icons\inv_misc_key_05
 ## SavedVariables: KeyKeeper, KeyKeeperLDBIconDB
