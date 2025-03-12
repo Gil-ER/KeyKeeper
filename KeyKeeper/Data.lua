@@ -7,6 +7,8 @@ ns.keyID = 0;
 ns.key = "";
 ns.level = 0;
 
+C_ChatInfo.RegisterAddonMessagePrefix(ns.prefix);
+
 local function IsToonInTable(toon)
 	--if the toon isn't in the DB add a blank record
 	KeyKeeper = KeyKeeper or {};
@@ -115,7 +117,7 @@ end;	--UpdateKey
 	if KeyKeeper.Toons == nil then return; end;
 	local msg = "";	
 	local cID = GetChannelName(ns.channel);
-	if cID > 0 then
+	--if cID > 0 then
 		for index,value in pairs(KeyKeeper.Toons) do 
 			local key = KeyKeeper.Toons[index]["Key"];
 			local level = KeyKeeper.Toons[index]["Level"];
@@ -124,10 +126,18 @@ end;	--UpdateKey
 			if (key ~= nil) and (level ~= nil) and (dt ~= nil) then
 				msg = index .. "#" .. key .. "#" .. level .. "#" .. dt .. "#" .. ns.Version;
 				if ns.debug then print("Sending ", msg); end;
-				local r = C_ChatInfo.SendAddonMessage (ns.prefix, msg, "CHANNEL", cID);
+				if cID > 0 then
+					local r = C_ChatInfo.SendAddonMessage (ns.prefix, msg, "CHANNEL", cID);
+				else
+					if UnitInParty("self") then 
+						C_ChatInfo.SendAddonMessage (ns.prefix, msg, "PARTY");
+					else
+						C_ChatInfo.SendAddonMessage (ns.prefix, msg, "GUILD"); 
+					end;
+				end;
 			end;
 		end;
-	end;
+	--end;
  end; 
  
  function ns:GetSaveResetTime()
@@ -175,15 +185,16 @@ end;
 			
 function ns:SendData(msg)
 	local cID = GetChannelName(ns.channel);
-	if cID > 0 then 
-		C_ChatInfo.SendAddonMessage (ns.prefix, msg, "CHANNEL", cID); 
-		if ns.debug then print("Sending ", msg); end;
-	else
-		if ns.debug then print("Refresh error, No channel.", toon); end;
-	end;
+	if cID > 0 then C_ChatInfo.SendAddonMessage (ns.prefix, msg, "CHANNEL", cID); end;
+	C_ChatInfo.SendAddonMessage (ns.prefix, msg, "GUILD");		
+	C_ChatInfo.SendAddonMessage (ns.prefix, msg, "PARTY");
+	if ns.debug then print("Sending ", msg); end;
+
 end;
 
 function ns:ChatKeys()
+	if KeyKeeper == nil then return; end;
+	if KeyKeeper.Toons == nil then return; end;
 	for index,value in pairs(KeyKeeper.Toons) do 
 		local key = KeyKeeper.Toons[index]["Key"];
 		local level = KeyKeeper.Toons[index]["Level"];
