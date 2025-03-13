@@ -194,7 +194,6 @@ function frame:OnEvent(event, ...)
 	if event == "CHAT_MSG_ADDON" then
 		--fires when an addon message is received
 		local Addon, Message, Stream, Source,_,_,_, ChannelName  = ...; 
-		print(Message, Stream, Source)
 		--watching for KeyKeeper
 		if Addon ~= ns.prefix then return;	end;	
 		--Ignore messages from yourself
