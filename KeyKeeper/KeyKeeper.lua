@@ -143,29 +143,15 @@ function frame:OnEvent(event, ...)
 		local icon = LibStub("LibDBIcon-1.0", true);
 		if not KeyKeeperLDBIconDB then KeyKeeperLDBIconDB = {} end;
 		icon:Register("KeyKeeper", kkLDB, KeyKeeperLDBIconDB)
-		if GetRealmName() == "Earthen Ring" then
-			if ns:GetSaveResetTime() < time() then
-				--if we have passed the reset time then reset
-				ns:ResetDataFile();
-			end;
-			--ns:GetSaveResetTime() will ensure KeyKeeper["settings"] is valid
-			if KeyKeeper["settings"]["debug"] == nil then KeyKeeper["settings"]["debug"] = false; end;
-			ns.debug = KeyKeeper["settings"]["debug"];
-			if ns.debug then print("KeyKeeper: Debug mode active."); end;
-			--only allow this to run the first time then stop monitoring
-			frame:UnregisterEvent("PLAYER_ENTERING_WORLD");
-		else
-			--Don't monitor events if your not on Earthen Ring
-			frame:UnregisterEvent("ZONE_CHANGED");
-			frame:UnregisterEvent("BAG_UPDATE_DELAYED");
-			frame:UnregisterEvent("PLAYER_ENTERING_WORLD");
-			frame:UnregisterEvent("CHAT_MSG_ADDON");
-			frame:UnregisterEvent("CHAT_MSG_CHANNEL");
-			frame:UnregisterEvent("CHAT_MSG_GUILD");
-			frame:UnregisterEvent("CHAT_MSG_OFFICER");
-			frame:UnregisterEvent("CHAT_MSG_PARTY");
-			frame:UnregisterEvent("CHAT_MSG_WHISPER");			
+		if ns:GetSaveResetTime() < time() then
+			--if we have passed the reset time then reset
+			ns:ResetDataFile();
 		end;
+		--ns:GetSaveResetTime() will ensure KeyKeeper["settings"] is valid
+		if KeyKeeper["settings"]["debug"] == nil then KeyKeeper["settings"]["debug"] = false; end;
+		ns.debug = KeyKeeper["settings"]["debug"];
+		if ns.debug then print("KeyKeeper: Debug mode active."); end;
+		frame:UnregisterEvent("PLAYER_ENTERING_WORLD");
 	end;
 	
 	if event == "BAG_UPDATE_DELAYED" then
@@ -191,7 +177,7 @@ function frame:OnEvent(event, ...)
 		end;
 	end; 
 
-	if event == "CHAT_MSG_ADDON" then
+	if event == "CHAT_MSG_ADDON" or event == "CHAT_MSG_GUILD" or event == "CHAT_MSG_PARTY" then
 		--fires when an addon message is received
 		local Addon, Message, Stream, Source,_,_,_, ChannelName  = ...; 
 		--watching for KeyKeeper
@@ -209,10 +195,10 @@ function frame:OnEvent(event, ...)
 				--parse out variables from message
 				local toon, stone, level, dt, ver = strsplit( "#", Message );
 				--if string didn't include a version then set it to 010205 anyone with this functionality is higher
-				if ver == nil or strfind(ver, ".") ~= nil then ver = "010205"; end;
-				if ns.Version < ver then
-					ns.Info:SetText("New update available"); 
-				end;
+				-- if ver == nil or strfind(ver, ".") ~= nil then ver = "010205"; end;
+				-- if ns.Version < ver then
+					-- ns.Info:SetText("New update available"); 
+				-- end;
 				if ns.debug then print(n, " sent ", Message); end;
 				ns:UpdateKey(toon, stone, level, dt, false);	
 			end;
@@ -221,36 +207,7 @@ function frame:OnEvent(event, ...)
 				refreshFlag = false;
 			end;			
 		end;
-	end;
-
-	if event == "CHAT_MSG_GUILD" or event == "CHAT_MSG_OFFICER" or event == "CHAT_MSG_PARTY" or event == "CHAT_MSG_WHISPER" then
-		local msg, player = ...; 
-		if strfind(msg, "Keystone:") and player == "Tem-EarthenRing" then
-			local _,_,_,d = strsplit("|", msg);		--Keystone: Dungeon (15)
-			local k, l = strsplit ("(",d)			--k = Keystone: Dungeon and l = 15)
-			_,k = strsplit(":",k,2);				--k = ' DUNGEON '
-			k = strtrim(k, " ");					--Trim the spaces
-			l = strtrim(strsplit(")",l)," ");		--drop the ')' 
-			--Send out the keystone
-			ns:UpdateKey("Tem", k, l, date("%Y %m %d %H:%M"), true);
-		end;
-	end;
-	
-	if event == "CHAT_MSG_CHANNEL" then
-		local msg, player, _,_,_,_,_,_, channelName = ...; 
-		if channelName:lower() == "turtleoverlords" then
-			if strfind(msg, "Keystone:") and player == "Tem-EarthenRing" then
-				local _,_,_,d = strsplit("|", msg);		--Keystone: Dungeon (15)
-				local k, l = strsplit ("(",d)			--k = Keystone: Dungeon and l = 15)
-				_,k = strsplit(":",k,2);				--k = ' DUNGEON '
-				k = strtrim(k, " ");					--Trim the spaces
-				l = strtrim(strsplit(")",l)," ");		--drop the ')' 
-				--Send out the keystone
-				ns:UpdateKey("Tem", k, l, date("%Y %m %d %H:%M"), true);
-			end;
-		end;
 	end;	
-	
 end	
 frame:SetScript("OnEvent", frame.OnEvent); 
 
