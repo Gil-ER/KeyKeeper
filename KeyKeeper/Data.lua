@@ -125,16 +125,16 @@ end;	--UpdateKey
 			--Don't sent if invalid
 			if (key ~= nil) and (level ~= nil) and (dt ~= nil) then
 				msg = index .. "#" .. key .. "#" .. level .. "#" .. dt .. "#" .. ns.Version;
-				if ns.debug then print("Sending ", msg); end;
-				if cID > 0 then
-					local r = C_ChatInfo.SendAddonMessage (ns.prefix, msg, "CHANNEL", cID);
-				else
-					if UnitInParty("self") then 
-						C_ChatInfo.SendAddonMessage (ns.prefix, msg, "PARTY");
-					else
-						C_ChatInfo.SendAddonMessage (ns.prefix, msg, "GUILD"); 
-					end;
-				end;
+				ns:SendData(msg);
+				--if cID > 0 then
+					--local r = C_ChatInfo.SendAddonMessage (ns.prefix, msg, "CHANNEL", cID);
+				--else
+					--if UnitInParty("self") then 
+						--C_ChatInfo.SendAddonMessage (ns.prefix, msg, "PARTY");
+					--else
+						--C_ChatInfo.SendAddonMessage (ns.prefix, msg, "GUILD"); 
+					--end;
+				--end;
 			end;
 		end;
 	--end;
@@ -186,7 +186,7 @@ end;
 function ns:SendData(msg)
 	local cID = GetChannelName(ns.channel);
 	if cID > 0 then C_ChatInfo.SendAddonMessage (ns.prefix, msg, "CHANNEL", cID); end;
-	C_ChatInfo.SendAddonMessage (ns.prefix, msg, "GUILD");		
+	C_ChatInfo.SendAddonMessage (ns.prefix, msg, "GUILD");	
 	C_ChatInfo.SendAddonMessage (ns.prefix, msg, "PARTY");
 	if ns.debug then print("Sending ", msg); end;
 
