@@ -1,13 +1,14 @@
 --ns namespace variable
 local _, ns = ...;
 local Export;
+local maxRows = 25;
 
 local t = {};		--table of FontStrings placed on the frame
 
 --Create strings and position for form info
 local CreateStringTable = function (f)
 	local row = 0;		--row spacing
-	for i = 1, 15 do
+	for i = 1, maxRows do
 		t[i] = {	[1] = f:CreateFontString(nil, "OVERLAY", "GameFontNormal"), 
 					[2] = f:CreateFontString(nil, "OVERLAY", "GameFontNormal"),
 					[3] = f:CreateFontString(nil, "OVERLAY", "GameFontNormal")
@@ -111,7 +112,7 @@ ns.Output:Hide();
 
 local function ClearAllText()
 	--Clears all strings in the chart
-	for i = 1, 15 do		--15 lines
+	for i = 1, maxRows do	--maxRows lines
 		for j = 1, 3 do		--3 positions
 			t[i][j]:SetText("");
 		end
@@ -124,14 +125,20 @@ function ns:ShowKeys()
 	local maxWidth = 100;		--100 will keep the frame width at least 300
 	if KeyKeeper ~= nil then 
 		local i = 1;
-		for index,value in pairs(KeyKeeper["Toons"]) do 
-			t[i][1]:SetText(index);
-			t[i][2]:SetText(KeyKeeper["Toons"][index]["Level"]);
-			t[i][3]:SetText(KeyKeeper["Toons"][index]["Key"]);
-			local w = floor(t[i][3]:GetWidth());
-			if w > maxWidth then maxWidth = w; end;
-			i = i + 1;
-			if i == 16 then ns.Output:SetWidth(maxWidth + 200); ns.Output:Show(); return; end;
+		local count=20;			--max key level
+		while count > 1 do
+			for index,value in pairs(KeyKeeper["Toons"]) do 
+				if count == tonumber(value.Level) then			--
+					t[i][1]:SetText(index);
+					t[i][2]:SetText(value.Level);
+					t[i][3]:SetText(value.Key);
+					local w = floor(t[i][3]:GetWidth());
+					if w > maxWidth then maxWidth = w; end;
+					i = i + 1;
+					if i == (maxRows + 1) then ns.Output:SetWidth(maxWidth + 200); ns.Output:Show(); return; end;
+				end;
+			end;
+			count = count -1;
 		end;
 	end;
 	ns.Output:SetWidth(maxWidth + 200);
